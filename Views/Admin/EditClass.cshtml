@@ -1,0 +1,138 @@
+﻿@model SchoolManagementSystem.Models.Class
+
+@{
+    ViewBag.Title = "Edit Class";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    List<SelectListItem> batchList = ViewBag.batchList;
+}
+<script >
+    $(document).ready(function () {
+        debugger
+        $('#batch').val(@Model.BatchId);
+        $('#section').val("@Model.Section");
+    })
+</script>
+<style type="text/css">
+    .container {
+        width: auto;
+    }
+
+    .sss {
+        border: 1px solid#e5e5e5;
+        padding: 1%;
+    }
+
+    .lll {
+        width: auto !important;
+        background-color: white;
+        padding-right: 16px;
+        padding-left: 15px;
+        border: 1px solid;
+        border-color: #729F32;
+        border-radius: 21px;
+    }
+
+    #error_explanation {
+        color: #dc6650;
+    }
+</style>
+@{
+    string gradeName = null;
+    if (ViewBag.gradeName != null)
+    {
+        gradeName = ViewBag.gradeName;
+    }
+    string gradeId = ViewBag.gradeId;
+
+}
+
+<div id="content" class="app-content" role="main">
+    <div class="app-content-body ">
+
+        <div class="hbox hbox-auto-xs hbox-auto-sm" style="background-color: white; padding: 0 15px 0">
+
+
+
+            <div class="bg-light lter b-b wrapper-md">
+                <h1 class="m-n font-thin h3">Add Class In Grade</h1>
+            </div>
+
+            <form class="new_grade" id="new_grade" action="/Admin/EditClass" accept-charset="UTF-8" method="post">
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <div class="container form-holder">
+                    <div class="row">
+                        <br>
+                        <fieldset class="sss well well-lg">
+                            <legend class="lll">Grade Information</legend>
+                            <div class="row">
+
+                                <div class="column col-xs-12 col-sm-6">
+                                    <div class="form-group ">
+                                        <div class="field">
+                                            <label for="grade_Grade">Grade</label><br>
+                                            <input type="text" value="@(gradeName)" style="height:34px;" class="form-control" readonly />
+                                            <input type="hidden" value="@(gradeId)" name="GradeId" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column col-xs-12 col-sm-6">
+                                    <div class="form-group ">
+                                        <div class="field">
+                                            <label for="grade_class">Class</label><br>
+                                            <input style="height:34px;" class="form-control" type="text" name=ClassName value="@(Model.ClassName)" id="grade_section" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column col-xs-12 col-sm-6">
+                                    <div class="form-group ">
+                                        <div class="field">
+                                            <label for="grade_batch">Batch</label><br>
+                                            @Html.DropDownList("BatchId", batchList, "-Select Batch-", new { @class = "form-control", id = "batch" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="column col-xs-12 col-sm-6">
+                                    <div class="form-group ">
+                                        <div class="field">
+                                            <label for="grade_section">Section</label><br>
+                                            <select class="form-control" required name="Section" id="section">
+                                                <option value=""></option>
+                                                <option value="Boys">Boys</option>
+                                                <option value="Girls">Girls</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="actions">
+                            <input type="submit" name="commit" value="Create" class="btn btn-block btn-success form-control" style="width:24%;float: right;" />
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <style type="text/css">
+                .form-holder .col-sm-4 {
+                    min-height: 84px;
+                }
+
+                .form-holder .form-control {
+                    width: 100%;
+                }
+
+                .form-control {
+                    border-radius: 7px;
+                    border: black;
+                }
+            </style>
+
+
+        </div>
+
+
+    </div>
+</div>
+

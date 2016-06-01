@@ -1,0 +1,156 @@
+﻿@model List<SchoolManagementSystem.Models.Subject>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example thead th').each(function (i, v) {
+            // var title = $('#example tfoot th').eq( $(this).index() ).text();
+            var title = $(this).text();
+            if (title != "Actions") {
+                $(this).html(
+                '<input type="text"  class="form-control" style="height:auto;width:auto" id="exampleInputName2" placeholder="' + title + '">'
+                );
+            }
+            else {
+                $(this).html('<div style="width:auto !important">' + title + '</div>');
+            }
+        });
+
+        // DataTable
+        var table = $('#example').DataTable();
+
+        // Apply the search
+        table.columns().eq(0).each(function (colIdx) {
+            $('input', table.column(colIdx).header()).on('keyup change', function () {
+                table
+                    .column(colIdx)
+                    .search(this.value)
+                    .draw();
+            });
+        });
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+        $('#print').on('click', function () {
+            reverse();
+            jQuery("#example").print({
+                noPrintSelector: ".actions",
+                // Add this on top
+                //append: "My Footer<br/>",
+                // Add this at bottom
+                //prepend: "<br/>jQueryScript.net",
+                title: "Al Omam International School"
+            });
+            reverseBack();
+
+        });
+        function reverseBack() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).text();
+                if (title != "Actions") {
+                    $(this).html(
+                    '<input type="text"  class="form-control" style="height:auto" id="exampleInputName2" placeholder="' + title + ' search">'
+                    );
+                }
+            });
+        }
+        function reverse() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).html();
+                var input = $('#exampleInputName2').attr('placeholder');
+                if (input != null) {
+                    var input = input.replace('search', '');
+                }
+                //            debugger
+                if (title != "Actions") {
+                    $(this).html(input);
+                }
+            });
+        }
+    });
+
+</script>
+@section Scripts{
+    <link href="~/Content/DataTables/datatables.min.css" rel="stylesheet" />
+    <script src="~/Content/DataTables/datatables.min.js"></script>
+    <script src="~/Scripts/jQuery.print.js"></script>
+    @*<script src="~/Scripts/Custom/PrintExample.js"></script>*@
+}
+
+
+@section PageTitle{
+<div class="page-title">
+    <div>
+        <h1>Subjects </h1>
+    </div>
+</div>
+}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="box">
+            <div class="box-title">
+                <h3>All Subjects</h3>
+            </div>
+            <div class="box-content">
+                <div class="btn-toolbar pull-right clearfix">
+                    <div class="btn-group">
+                        <a class="btn btn-circle show-tooltip" title="Add new subject" href="AddSubject"><i class="fa fa-plus"></i></a>
+                        <a id="print" class="btn btn-circle show-tooltip" title="Print" href="javascript:void(0)"><i class="fa fa-print"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Refresh" href="javascript:void(0)"><i class="fa fa-refresh"></i></a>
+                    </div>
+                </div>
+                <div class="clearfix" style="margin-top:10px"></div>
+                <table class="table table-advance" id="example" style="height:inherit">
+                    <thead class="table-head">
+                        <tr>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th class="actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+
+                                <td>@Model[i].Name</td>
+                                <td>@Model[i].Code</td>
+                                <td class="actions">
+                                    <a class="btn btn-success glyphicon glyphicon-ok-circle" href=@("/Admin/ViewSubjectDetails/" + Model[i].Id)></a>
+                                    <a class="btn btn-info  glyphicon glyphicon glyphicon-pencil" href=@("/Admin/EditSubject/"+Model[i].Id)></a>
+                                    <a href="@("#modal-"+i)" role="button" data-toggle="modal" class="btn btn-danger glyphicon glyphicon glyphicon-trash"></a>
+
+                                    <div id="@("modal-"+i)" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h3 id="myModalLabel2">Deleting Subejct</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete subject <strong>@Model[i].Name</strong></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+                                            <a href=@("/Admin/DeleteSubject/" + Model[i].Id) class="btn btn-primary">Yes</a>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

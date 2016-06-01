@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "ShowEmployeeToGrantLeave";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model SchoolManagementSystem.Models.Employee
+
+<div class="container">
+    <form action="GrantEmployeeLeave" method="post">
+        <input type="text" name="FullName" value="@(Model.FullName)" readonly />
+        <input type="text" name="MobileNumber" value="@(Model.MobileNumber)" readonly />
+        <input type="text" name="Category" value="@(Model.Category)" readonly />
+        
+
+        @*<input type="hidden" value="@(Model.ClassId)" />*@
+        <input type="hidden" name="EmployeeId" value="@(Model.Id)" />
+        
+        <input type="text" class="date-picker" name="LeaveStart" />
+        <br />
+        <label>Leave Ends at</label>
+        <input type="text" class="date-picker" name="LeaveEnd" />
+        <textarea name="Reason" placeholder="Reason to Grant Leave"></textarea>
+        <textarea name="Discription" placeholder="Briefly Describe Reason to Grant Leave"></textarea>
+        <input type="submit" class="btn btn-primary" value="Get Leave" />
+    </form>
+</div>
+
+
+

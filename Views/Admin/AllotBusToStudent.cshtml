@@ -1,0 +1,57 @@
+﻿@using SchoolManagementSystem.Models
+@{
+    ViewBag.Title = "AllotBusToStudent";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Student student = ViewBag.Student;
+    Bus bus = ViewBag.Bus;
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <label>Student Information</label>
+        </div>
+        <div class="row">
+            <input type="hidden" name="Student.Id" value="@(student.Id)">
+            <label>Student name</label>
+            <input type="text" readonly value="@(student.UserName)" />
+            <label>Student Grade</label>
+            <input type="text" value="@(student.Grade)" readonly />
+            <label>Student Father name</label>
+            <input type="text" value="@(student.FatherName)" readonly />
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <label>Bus Information</label>
+        </div>
+        <div class="row">
+            <input type="text" value="@bus.Name" />
+            <input type="text" value="@bus.MaxNoOfStudents" />
+            <input type="text" value="@bus.CurrentNoOfStudents" />
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="container">
+        <label> Bus allotment</label>
+    </div>
+    <div class="container">
+        <form action="/Admin/AllotBusToStudent" method="post">
+
+            <input type="number" name="TransportFee" placeholder="Enter Transport Fee" required />
+            <select name="Mode" required>
+                <option value=""></option>
+                <option value="Two Way">Two Way</option>
+                <option value="One Way">One Way</option>
+            </select>
+            <input type="hidden" name="StudentId" value="@(student.Id)" />
+            <input type="hidden" name="BusId" value="@(bus.Id)" />
+            <input type="submit" value="Allot Bus" />
+        </form>
+
+    </div>
+</div>
+

@@ -1,0 +1,65 @@
+﻿@model SchoolManagementSystem.Models.InventoryItem
+@{
+    ViewBag.Title = "EditInventoryItem";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<SelectListItem> gradeList = ViewBag.GradeSelectList;
+    List<SelectListItem> cList = ViewBag.CategorySelectList;
+    int uniID = ViewBag.UniformValue;
+
+}
+
+<h2>EditInventoryItem</h2>
+
+<script>
+    $(document).ready(function () {
+
+        $("#category").val(@Model.ItemCategory);
+        $("#grade").val(@Model.GradeId);
+
+        f1();
+        $("#category").change(function () {
+            debugger
+            f1();
+        });
+        function f1()
+        {
+            debugger
+            var catType = $("#category").val();
+            if (catType == "3") {
+                $("#unifromType").show();
+                $("#unifromType").attr("required", true);
+                $("#unifromType").val("@Model.UniformSize");
+            }
+            else {
+                $("#unifromType").hide();
+                $("#unifromType").attr("required", false);
+            }
+        }
+        
+    })
+</script>
+
+<div class="container">
+    <div class="row">
+        <h2>EditInventoryItem</h2>
+    </div>
+    <div class="row">
+        <form action="/Admin/EditInventoryItem" method="post">
+<input type="hidden" name="Id" value="@Model.Id" />
+            <input type="text" name="ItemName" value="@Model.ItemName" placeholder="Enter Item name" required />
+            @Html.DropDownList("ItemCategory", cList, new { @class = "dropdown", required = "required", id = "category" })
+            @Html.DropDownList("GradeId", gradeList, new { @class = "dropdown", required = "required", id = "grade" })
+            <input type="number" name="PurchasedPrice" value="@Model.PurchasedPrice" placeholder="Enter PurchasedPrice" required />
+            <input type="number" name="SalePrice" value="@Model.SalePrice" placeholder="Enter SalePrice" required />
+            <input type="number" name="Quantity" placeholder="Enter Quantity" value="@Model.Quantity" required />
+            <select id="unifromType" name="UniformSize" hidden>
+                <option value=""></option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select>
+            <input type="submit" value="Add item" />
+        </form>
+    </div>
+</div>
+

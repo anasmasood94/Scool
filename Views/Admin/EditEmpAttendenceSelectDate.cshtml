@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "EditEmpAttendenceSelectDate";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section Scripts{
+    <link href="~/Content/assets/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+    <script src="~/Content/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/Content/assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+
+}
+
+@section PageTitle{
+    <div class="page-title">
+        <h1>Edit Employee Attendance</h1>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>Edit Attendence </h3>
+    </div>
+    <div class="box-content">
+        <form method="post" action="EditEmpAttendenceSelectDateClass2">
+            <div class="row-fluid">
+                <div class="span5 offset1">
+                    <label>Select Date</label>
+                    <input type="text" class="date-picker" name="Date" required data-mask="99/99/9999" />   
+                </div>
+            </div>
+            <div class="form-actions">
+                <div class="row-fluid">
+                    <input type="submit" class="btn btn-success span3 pull-right" value="Go To attedence" />
+                </div>s
+            </div>
+        </form>
+    </div>
+</div>

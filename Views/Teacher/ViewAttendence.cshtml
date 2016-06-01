@@ -1,0 +1,49 @@
+﻿@model List<SchoolManagementSystem.Models.AttendenceViewModel>
+@{
+    ViewBag.Title = "ViewAttendence";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+<div class="page-title">
+    <h2>Attendence</h2>
+</div>
+<div class="box">
+    <div class="box-title">
+        <h3>View Attendence </h3>
+    </div>
+    <div class="box-content">
+        
+        <input type="hidden" name="ClassId" value="@(ViewBag.ClassId)" />
+        <input type="hidden" name="Date" value="@(ViewBag.Date)" />
+        <table class="table table-advance">
+            <thead class="table-head">
+                <tr>
+                    <th>StudentName</th>
+
+                    <th>Present/Absent</th>
+
+
+                    <th>Late</th>
+
+
+                    <th>Leave</th>
+
+
+                    <th>LeaveReason</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var l in Model)
+                {
+                    <tr>
+                        <td>@l.StudentName</td>
+                        <td>@Html.DisplayFor(Item => l.Present)</td>
+                        <td>@Html.DisplayFor(Item => l.Late)</td>
+                        <td>@Html.DisplayFor(Item => l.Leave)</td>
+                        <td>@l.LeaveReason</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

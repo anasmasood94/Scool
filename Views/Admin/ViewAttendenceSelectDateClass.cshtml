@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "ViewAttendenceSelectDateClass";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<SelectListItem> clsList = ViewBag.classList;
+}
+
+<div class="box">
+    <div class="box-title">
+        <h1> View Attendance</h1>
+    </div>
+    <div class="box-content">
+        <div class="row">
+            <br /><br /><br />
+            <form method="post" action="ViewAttendenceSelectDateClass2">
+                <div class="col-md-6">
+                    @Html.DropDownList("ClassId", clsList, "Select Class", new { @class = "", required = "required" })
+                </div>
+                <div class="col-md-6">
+                    <label>Select Date</label>
+                    <input type="text" class="date-picker" name="Date" required />
+                </div>
+                &nbsp;
+                &nbsp;
+                    <input type="submit" class="btn btn-primary" value="Go To attedence" />
+                
+            </form>
+
+        </div>
+    </div>
+</div>

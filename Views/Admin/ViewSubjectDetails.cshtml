@@ -1,0 +1,35 @@
+﻿@model SchoolManagementSystem.Models.Subject
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section PageTitle{
+<div class="page-title">
+    <div>
+        <h1><i class="icon-file-alt"></i> Subjects </h1>
+    </div>
+</div>
+    }
+
+<div class="box box-gray">
+    <div class="box-title">
+        <h3>@Model.Name</h3>
+    </div>
+    <div class="box-content">
+        <br />
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Subject name</td>
+                        <td>@Model.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Subject code</td>
+                        <td>@Model.Code</td>
+                    </tr>
+                </tbody>
+            </table>
+        <a class="btn btn-success" href="/Admin/ListAllSubjects">Back</a>
+    </div>
+</div>

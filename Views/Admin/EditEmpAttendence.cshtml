@@ -1,0 +1,70 @@
+﻿
+@{ 
+    ViewBag.Title = "EditEmpAttendence";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@model List<SchoolManagementSystem.Models.AttendenceViewModel>
+
+<div class="page-title">
+    <h3>Edit Attendence</h3>
+</div>
+    <div class="clearfix" style="margin-top:10px">
+        <div class="box">
+            <div class="box-title">
+                <label>Employee Attendence</label>
+            </div>
+            <div class="box-content">
+
+                <form method="post" action="EditEmpAttendence">
+                    <input type="hidden" name="Date" value="@(ViewBag.Date)" />
+                    <table class="table table-advance">
+                        <thead class="table-head">
+                            <tr>
+                                <th><label>Employee Name</label></th>
+                                <th><label>Position</label></th>
+                                <th><label>Present/Absent</label></th>
+                                <th><label>Late</label></th>
+                                <th><label>Leave</label></th>
+                                <th><label>LeaveReason</label></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var l in Model)
+                            {
+                                <tr>
+                                    <td>@l.EmployeeName</td>
+                                    <td>@l.EmployeePosition</td>
+                                    <td>
+                                        @if (l.Present)
+                                        {
+                                            <input type="checkbox" class="checkbox" value="@(l.EmployeeId)" name=Present checked />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="checkbox" value="@(l.EmployeeId)" name=Present />
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (l.Late)
+                                        {
+                                            <input type="checkbox" class="checkbox" value="@(l.EmployeeId)" name=Late checked />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="checkbox" value="@(l.EmployeeId)" name=Late />
+                                        }
+                                    </td>
+                                    <td>@Html.DisplayFor(item => l.Leave)</td>
+                                    <td>@l.LeaveReason</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <input type="submit" class="btn btn-primary" value="Submit Attendence" />
+                </form>
+
+            </div>
+        </div>
+    </div>

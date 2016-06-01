@@ -1,0 +1,301 @@
+﻿@model SchoolManagementSystem.Models.Employee
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@{
+    ViewBag.Title = "ViewEmployeeDetail";
+}
+@section PageTitle{
+    <div class="page-title">
+        <h1>View Employee</h1>
+    </div>
+}
+    <div class="box">
+        <div class="box-title">
+            <h3>Employee Information</h3>
+        </div>
+        <div id="content" class="box-content" role="main">
+            <div class="app-content-body ">
+
+                <div class="hbox hbox-auto-xs hbox-auto-sm" style="background-color: white; padding: 0 15px 0">
+
+
+                    <!-- <div class="hbox hbox-auto-xs hbox-auto-sm" ng-init="
+                      app.settings.asideFolded = false;
+                      app.settings.asideDock = false;
+                    "> -->
+                    <!-- main -->
+                    <div style=" margin-top:20px;"></div>
+
+
+                    <style type="text/css">
+                        .abc {
+                            width: 1080px;
+                        }
+                    </style>
+
+                    <div class="abc" style="">
+
+                        <div class="container">
+
+                            <h3> </h3>
+                            <br>
+                            <div class="span4">
+                                <table class="table">
+                                    <tbody>
+
+                                        <tr>
+                                            <td >
+                                                Date of Birth
+                                            </td>
+
+                                            <td>@Model.DateOfBirth</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="student-profile-td">
+                                                ID Card Number
+                                            </td>
+
+                                            <td>@Model.PassportNumber</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="student-profile-td">
+                                                ID Card Expiry
+                                            </td>
+
+                                            <td>@Model.PassportExpiry</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="span4">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="student-profile-td">
+                                                Gender
+                                            </td>
+
+                                            <td>
+                                                @Model.Gender
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="student-profile-td">
+                                                Nationality
+                                            </td>
+
+                                            <td>
+                                                @Model.Nationality
+                                            </td>
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <td class="student-profile-td">
+                                                Religion
+                                            </td>
+
+                                            <td>
+                                                @Model.Religion
+                                            </td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                                <!-- <p>Section:<label>A</label></p> -->
+                            </div>
+
+
+                        </div>
+
+                        <hr />
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#ContactDetails" aria-controls="messages" role="tab" data-toggle="tab">Contact details</a></li>
+
+                            <li role="presentation"><a href="#PreviousDetails" aria-controls="messages" role="tab" data-toggle="tab">Qualification details</a></li>
+                            <li role="presentation"><a href="#MedicalBackground" aria-controls="messages" role="tab" data-toggle="tab">Employee Other Details</a></li>
+
+
+
+                        </ul>
+
+                        <br>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="ContactDetails">
+                                <div class="span3">
+                                    <h4 class="student-tabs">Personal Details</h4>
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                Address 1
+                                            </td>
+                                            <td>@Model.Address1</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                Address 2
+                                            </td>
+                                            <td>@Model.Address2</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                City
+                                            </td>
+                                            <td>@Model.City</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Country
+                                            </td>
+                                            <td>@Model.Country</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Passport No.
+                                            </td>
+                                            <td>@Model.PassportNumber</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                Passport Expiry
+                                            </td>
+                                            <td>@Model.PassportExpiry</td>
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <td>
+                                                Phone
+                                            </td>
+                                            <td>@Model.HomePhone</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Mobile
+                                            </td>
+                                            <td>@Model.MobileNumber</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                E-mail
+                                            </td>
+                                            <td>@Model.Email</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+
+
+
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="PreviousDetails">
+                                <div class="span12">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="student-profile-td">
+                                                    Qualification
+                                                </td>
+                                                <td>@Model.Qulification</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <hr>
+
+                                </div>
+                            </div>
+
+
+                            <div role="tabpanel" class="tab-pane" id="MedicalBackground">
+                                <div class="span6">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="student-profile-td">
+                                                    Employee ID
+                                                </td>
+
+                                                <td>
+                                                    @Model.Id
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="student-profile-td">
+                                                    Employee Number
+                                                </td>
+
+                                                <td>
+                                                    @Model.UserName
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="student-profile-td">
+                                                    Employee Date of Joining
+                                                </td>
+
+                                                <td>@Model.DateOfJoining</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="student-profile-td">
+                                                    Employee Category
+
+                                                </td>
+
+                                                <td>
+                                                    @Model.Category
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="student-profile-td">
+                                                    Employee Department
+                                                </td>
+
+                                                <td></td>
+                                            </tr>
+
+
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>

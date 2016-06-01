@@ -1,0 +1,210 @@
+﻿@model List<SchoolManagementSystem.Models.GradeFee>
+@{
+    ViewBag.Title = "Estimate";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<SelectListItem> gradeList = ViewBag.gradeList;
+}
+
+<script>
+    $(document).ready(function () {
+        var total = 0;
+        $('.amount').each(function () {
+            debugger
+            if (typeof $(this).html() != 'undefined') {
+                total += parseFloat($(this).html());
+            }
+        });
+        $('#grandTotal').val(total);
+
+    });
+</script>
+
+@section Scripts{
+    <link href="~/Content/DataTables/datatables.min.css" rel="stylesheet" />
+    <script src="~/Content/DataTables/datatables.min.js"></script>
+}
+
+@section PageTitle{
+    <div class="page-title">
+        <h1>Fee Break Down</h1>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>Estimate</h3>
+        <div class="box-tool">
+            <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+            <a data-action="close" href="#"><i class="icon-remove"></i></a>
+        </div>
+    </div>
+    <div class="box-content">
+
+
+        <div class="row-fluid">
+            <div class="table-responsive">
+                <table class="table table-bordered ">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < @Model.Count; i++)
+                        {
+                            <tr>
+                                <td>@Model[i].Title</td>
+                                <td class="amount">@Model[i].Amount</td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="container">
+                    <label>Grade Total</label>
+                    <input type="text" id="grandTotal" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+@*<div class="row-fluid">
+        <div class="span2">
+            <br />
+            <br />
+            <label class="checkbox">
+                <input type="checkbox" value=""> Admission
+            </label>
+        </div>
+        <div class="span2">
+            <label for="AdmissionFeeamount">Amount</label>
+            <br />
+            <input type="number" name="AdmissionFeeamount" id="AdmissionFeeamount">
+        </div>
+        <div class="span2">
+            <label for="AdmissionFeeMode">Mode</label>
+            <br />
+            <input type="text" name="AdmissionFeeMode" id="AdmissionFeeMode">
+        </div>
+
+        <div class="span2">
+            <label for="AdmissionFeeDiscount">Discount</label>
+            <br />
+            <input type="number" name="AdmissionFeeDiscount" id="AdmissionFeeDiscount">
+        </div>
+        <div class="span2">
+            <label for="AdmissionFeeTotal">Total</label>
+            <br />
+            <input type="number" name="AdmissionFeeTotal" id="AdmissionFeeTotal">
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span2">
+            <br />
+            <br />
+            <label class="checkbox">
+                <input type="checkbox" value=""> Tution Fee
+            </label>
+        </div>
+        <div class="span2">
+            <label for="TutionFeeAmount">Amount</label>
+            <br />
+            <input type="number" name="TutionFeeAmount" id="TutionFeeAmount">
+        </div>
+        <div class="span2">
+            <label for="TutionFeeMode">Mode</label>
+            <br />
+            <input type="text" name="TutionFeeMode" id="TutionFeeMode">
+        </div>
+
+        <div class="span2">
+            <label for="TutionfeeDiscount">Discount</label>
+            <br />
+            <input type="number" name="TutionfeeDiscount" id="TutionfeeDiscount">
+        </div>
+        <div class="span2">
+            <label for="TutionFeeTotal">Total</label>
+            <br />
+            <input type="number" name="TutionFeeTotal" id="TutionFeeTotal">
+        </div>
+
+    </div>
+
+    <div class="row-fluid">
+        <div class="span2">
+            <br />
+            <br />
+            <label class="checkbox">
+                <input type="checkbox" value=""> Transport
+            </label>
+        </div>
+        <div class="span2">
+            <label for="TransportAmount">Amount</label>
+            <br />
+            <input type="number" name="TransportAmount" id="TransportAmount">
+        </div>
+        <div class="span2">
+            <label for="TransportMode">Mode</label>
+            <br />
+            <input type="text" name="TransportMode" id="TransportMode">
+        </div>
+
+        <div class="span2">
+            <label for="TransportDiscount">Discount</label>
+            <br />
+            <input type="number" name="TransportDiscount" id="TransportDiscount">
+        </div>
+        <div class="span2">
+            <label for="TransportTotal">Total</label>
+            <br />
+            <input type="number" name="TransportDiscount" id="TransportDiscount">
+        </div>
+
+    </div>
+
+    <div class="row-fluid">
+        <div class="span2">
+            <br />
+            <br />
+            <label class="checkbox">
+                <input type="checkbox" value=""> Book Shop
+            </label>
+        </div>
+        <div class="span2">
+            <label for="BookshopAmount">Amount</label>
+            <br />
+            <input type="number" name="BookshopAmount" id="BookshopAmount">
+        </div>
+        <div class="span2">
+            <label for="BookshopMode">Mode</label>
+            <br />
+            <input type="text" name="BookshopMode" id="BookshopMode">
+        </div>
+
+        <div class="span2">
+            <label for="BookshopDiscount">Discount</label>
+            <br />
+            <input type="number" name="BookshopDiscount" id="BookshopDiscount">
+        </div>
+        <div class="span2">
+            <label for="BookshopTotal">Total</label>
+            <br />
+            <input type="number" name="BookshopTotal" id="BookshopTotal">
+        </div>
+
+    </div>
+    <div class="row-fluid">
+        <label for="Grandtotal" style="color:red">
+            Grand Total
+            <input type="number" name="GrandTotal" id="GrandTotal" class="span6" />
+        </label>
+    </div>*@

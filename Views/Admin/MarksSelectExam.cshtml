@@ -1,0 +1,160 @@
+﻿@model SchoolManagementSystem.Models.StudentExamViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="page-title">
+    <div>
+        <h1>@ViewBag.PageTitle</h1>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var flag = 0;
+        $('.number-exam').blur(function () {
+            debugger
+            var max = $(this).parents('.marks-main-div').find('.marks-total').val();
+            var value = $(this).val();
+            if ($(this).hasClass('error') && value <= max) {
+                flag -= 1;
+                $(this).removeClass('error');
+                var average = $(this).parents(".nested-field").find('.average-exam');
+                var gpa = (value / max) * 4;
+                average.val(gpa);
+            }
+            if (!$(this).hasClass('error') && value > max) {
+                alert('Marks cannot be higher then total marks');
+                $(this).addClass("error");
+                flag += 1;
+            }
+            else {
+                var average = $(this).parents(".nested-field").find('.average-exam');
+                var gpa = (value / max) * 4;
+                average.val(gpa);
+            }
+
+        });
+        $('#Save').click(function () {
+            if (flag <= 0)
+                $('#Exam-form').submit();
+
+        });
+    });
+</script>
+
+@{
+    int count = 0;
+}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="box">
+            <form action="#" method="post">
+            <div class="box-content">
+                <div class="row">
+                    <div class="col-md-7">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#obj_1" aria-controls="messages" role="tab" data-toggle="tab">@Model.marks[0].Name</a></li>
+                            @{
+                                for (int i = 1; i < Model.marks.Count; i++)
+                                {
+                                    <li role="presentation"><a href="#obj_@(i+1)" aria-controls="messages" role="tab" data-toggle="tab">@Model.marks[i].Name</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div class="col-md-5 pull-right">
+                        <button class="btn btn-success" id="Save" >Save Marks</button>
+                        <button class="btn btn-info" id="Upload" type="button" >Upload By CSV</button>
+                    </div>
+                </div>
+                        <br>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="obj_1">
+                                <div class="box box-blue marks-main-div">
+                                    <input type="hidden" class="marks-total" value="@Model.marks[0].TotalMarks" />
+                                    <table class="table table-striped" id="marks">
+                                        <thead>
+                                            <tr>
+                                                <th>Student Id</th>
+                                                <th>Student Name</th>
+                                                <th>Performance Report</th>
+                                                <th>@Model.marks[0].Name</th>
+                                                <th>Average (4.0)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @{
+                                                for (int i = 0; i < Model.student.Count; i++)
+                                                {
+                                                    <tr class="nested-field">
+                                                        <td>
+                                                            <label>@Model.student[i].Id</label>
+                                                            <input type="hidden" name="[@count].StudentId" value="@Model.student[i].Id" />
+                                                            <input type="hidden" name="[@count].ClassId" value="@Model.student[i].ClassId" />
+                                                        </td>
+                                                        <td><label>@(Model.student[i].FirstName + " " + Model.student[i].SecondName + " " + Model.student[i].ThirdName + " " + Model.student[i].FourthName)</label></td>
+                                                        <td><a class="btn btn-info" href="#"><label>Add Report</label></a></td>
+                                                        <td><input type="text" class="number-exam" name="[@count].Marks" /></td>
+                                                        <td>
+                                                            <input type="text" class="average-exam" readonly />
+                                                            <input type="hidden" name="[@count].SubjectId" value="@ViewBag.MSubjectId" />
+                                                            <input type="hidden" name="[@count].MarkFormatId" value="@Model.marks[0].Id" />
+                                                        </td>
+                                                    </tr>
+                                                    count++;
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @{
+                                for(int i=1; i<Model.marks.Count; i++)
+                                {
+                                    <div role="tabpanel" class="tab-pane" id="obj_@(i+1)">
+                                        <div class="box box-blue marks-main-div">
+                                            <input type="hidden" class="marks-total" value="@Model.marks[0].TotalMarks" />
+                                            <table class="table table-striped" id="marks">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Student</th>
+                                                        <th>Student Name</th>
+                                                        <th>Performance Report</th>
+                                                        <th>@Model.marks[i].Name</th>
+                                                        <th>Average (4.0)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @{
+                                                        for (int j = 0; j < Model.student.Count; j++)
+                                                        {
+                                                            <tr class="nested-field">
+                                                                <td><label>@Model.student[j].Id</label><input type="hidden" name="[@count].StudentId" value="@Model.student[j].Id" /></td>
+                                                                <td><label>@(Model.student[j].FirstName + " " + Model.student[j].SecondName + " " + Model.student[j].ThirdName + " " + Model.student[j].FourthName)</label></td>
+                                                                <td><a class="btn btn-info" href="#"><label>Add Report</label></td>
+                                                                <td><input type="text" class="number-exam" name="[@count].Marks" /></td>
+                                                                <td>
+                                                                    <input type="text" class="average-exam" readonly />
+                                                                    <input type="hidden" name="[@count].SubjectId" value="@ViewBag.MSubjectId" />
+                                                                    <input type="hidden" name="[@count].MarkFormatId" value="@Model.marks[i].Id" />
+                                                                </td>
+                                                            </tr>
+                                                            count++;
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

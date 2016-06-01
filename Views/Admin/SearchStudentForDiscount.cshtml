@@ -1,0 +1,23 @@
+﻿@model SchoolManagementSystem.Models.Student
+@{
+    ViewBag.Title = "SearchStudentForDiscount";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="box">
+    <div class="box-title">
+        <h3> Search Student For Discount</h3>
+    </div>
+    <div class="box-content">
+        <form action="SearchStudentForDiscount" method="post">
+            <input type="number" placeholder="Enter Student Id" name="Id" />
+            <input type="text" placeholder="Enter Student Name" name="UserName" />
+            <input type="text" placeholder="Enter Student Mobile Number" name="MobileNumber" />
+            <input type="text" placeholder="Enter Student Father Name" name="FatherName" />
+            <input type="text" placeholder="Enter Student Grade Name" name="Grade" />
+            <input type="submit" value="Get Student" />
+        </form>
+    </div>
+</div>
+
+

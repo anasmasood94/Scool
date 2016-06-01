@@ -1,0 +1,137 @@
+﻿@model SchoolManagementSystem.Models.StudentCompleteFeeStructureViewModel
+@{
+    ViewBag.Title = "StudentCompleteFee";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int i = 0;
+}
+@section Scripts{
+<link href="~/Content/DataTables/datatables.min.css" rel="stylesheet" />
+<link href="~/Content/assets/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+<script src="~/Content/DataTables/datatables.min.js"></script>
+<script src="~/Content/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/jQuery.print.js"></script>
+}
+@section PageTitle{
+    <div class="page-title">
+        <h1>Submit Fee</h1>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>Add Amount</h3>
+    </div>
+    <div class="box-content">
+        <div class="form-control">
+            <form method="post" action="SubmitStudentComplete">
+                <div class="row-fluid">
+                    <div class="span4 offset1">
+                        <input type="hidden" name="Student.Id" value="@(Model.Student.Id)">
+                        <label>Student name</label>
+                        <input type="text" readonly value="@(Model.Student.UserName)" />
+                    </div>
+                    <div class="span4">
+                        <label>Student Grade</label>
+                        <input type="text" value="@(Model.Student.Grade)" readonly />
+                    </div>
+                    </div>
+                <div class="row-fluid">
+                    <div class="span4 offset1">
+                        <label>Student Father name</label>
+                        <input type="text" value="@(Model.Student.FatherName)" readonly />
+                    </div>
+                    <div class="span4">
+                        <label>Next Due Date</label>
+                        <input class="date-picker" type="text" placeholder="" name="DueDate" required />
+                    </div>
+                </div>
+                    <table class="table table-advance" id="example">
+                        <thead class="table-head">
+                            @foreach (var item in Model.GradeStudentCompleteList)
+                            {
+                                <tr>
+                                    <th>
+                                        <input type="hidden" name=@("GradeStudentCompleteList[" + i + "].GradeFee.Id") value="@(item.GradeFee.Id)" />
+                                        <input type="hidden" name=@("GradeStudentCompleteList[" + i + "].StudentGradeFee.Id") value="@(item.StudentGradeFee.Id)">
+                                    </th>
+                                    <th> <label>@item.GradeFee.Title</label> </th>
+
+                                    <th><label>Amount</label></th>
+                                    <th>
+                                        <label>Discount</label>
+                                    </th>
+                                    <th>
+                                        <label>Mode</label>
+                                    </th>
+                                    <th>
+                                        <label>Paid</label>
+                                    </th>
+                                    <th>
+                                        <label>Remaing Fee</label>
+                                    </th>
+                                    <th>
+                                        <label>Total Amount</label>
+                                    </th>
+                                    <th>
+                                        <input type="text" value="@(item.GradeFee.Amount)" readonly />
+                                    </th>
+                                    <th>
+                                        <input type="text" name=@("GradeStudentCompleteList["+i+"].StudentGradeFee.Mode") readonly />
+                                    </th>
+                                    <th>
+                                        <input type="text" value="@(item.StudentGradeFee.Discount)" name=@("GradeStudentCompleteList[" + i + "].StudentGradeFee.Discount") readonly />
+                                    </th>
+                                    <th>
+                                        <input type="number" name=@("GradeStudentCompleteList[" + i + "].StudentGradeFee.Paid") />
+                                    </th>
+                                    <th>
+                                        <input type="number" id="remaingBalance" />
+                                    </th>
+                                    { i++; }
+                                </tr>
+                            }
+                        </thead>
+                        <tbody>
+                            @{i = 0;}
+
+                            @foreach (var item in Model.StudentSpecificFeeList)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name=@("StudentSpecificFeeList["+i+"].Id") value="@(item.Id)" />
+                                        <input type="hidden" name=@("StudentSpecificFeeList["+i+"].StudentId") value="@(item.StudentId)" />
+                                    </td>
+                                    <td>
+                                        <label>Remaining Amount</label>
+                                        <input type="text" value="@(item.RemainingAmount)" name=@("[" + i + "]StudentSpecificFeeList.RemainingAmount") readonly />
+                                    </td>
+
+
+
+                                    <td>
+                                        <label>Mode</label>
+                                        <input type="text" value="@(item.Mode)" name=@("StudentSpecificFeeList[" + i + "].Mode") />
+                                    </td>
+
+                                    <td>
+                                        <label>Paid</label>
+                                        <input type="number" name=@("StudentSpecificFeeList[" + i + "].Paid") />
+                                    </td>
+                                    <td>
+                                        <label>Remaing Fee</label>
+                                        <input type="number" id="remaingBalance" />
+                                    </td>
+                                </tr>
+                                { i++; }
+
+                            }
+                        </tbody>
+                    </table>
+                    
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-primary" value="SubmitFee" />
+                </div>
+                </form>
+    </div>
+
+    </div>
+</div>

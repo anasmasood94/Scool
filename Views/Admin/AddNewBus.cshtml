@@ -1,0 +1,48 @@
+﻿@model SchoolManagementSystem.Models.Bus
+@{
+    ViewBag.Title = "AddNewBus";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<SelectListItem> gradeList = ViewBag.GradeSelectList;
+    List<SelectListItem> rootList = ViewBag.RouteSelectList;
+}
+
+@section PageTitle{
+    <div class="page-title">
+        <h1>Add New Bus</h1>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>Enter Bus Information</h3>
+    </div>
+    <div class="box-content">
+        <form action="/Admin/AddNewBus" method="post">
+            <div class="row-fluid">
+                <div class="span5 offset1">
+                    <label>Enter Bus Name</label>
+                    <input type="text" class="input" name="Name" required />
+                    <label>Enter Driver Name</label>
+                    <input type="text" class="input" name="DriverName" required />
+                    <label hidden>Select Grade</label>
+                    <div hidden>
+                        @Html.DropDownList("GradeId", gradeList, new { @class = "dropdown", required = "required", })
+                    </div>
+                </div> 
+                <div class="span5">
+                    <label>Enter Max Student Allowed</label>
+                    <input type="text" name="MaxNoOfStudents" required>
+                    <label>Enter Conducter Name</label>
+                    <input type="text" name="ConductorName" required>
+                    <label>Select Route</label>
+                    @Html.DropDownList("RootId", rootList, new { @class = "dropdown", required = "required" })
+                </div>
+            </div>
+            <div class="row-fluid form-actions">
+                <div class="span3 pull-right">
+                    <input type="submit" value="Add Bus" class="btn btn-success" />
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>

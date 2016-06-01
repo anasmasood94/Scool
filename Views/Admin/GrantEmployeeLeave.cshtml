@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "GrantEmployeeLeave";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model SchoolManagementSystem.Models.Employee
+
+<div class="box">
+    <div class="box-title">
+        <h1>Grant employee Leave</h1>
+    </div>
+    <form action="SearchEmployeeForLeave" method="post">
+        <input type="number" placeholder="Enter Employee Id" name="Id" />
+        <input type="text" placeholder="Enter Employee Name" name="FullName" />
+        <input type="text" placeholder="Enter Employee Mobile Number" name="MobileNumber" />
+        <input type="text" placeholder="Enter Employee Position" name="Category" />
+        <input type="submit"  class="btn btn-group" value="Get Employee" />
+    </form>
+</div>
+
+

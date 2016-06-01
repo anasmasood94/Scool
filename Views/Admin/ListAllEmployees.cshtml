@@ -1,0 +1,158 @@
+﻿@model List<SchoolManagementSystem.Models.Employee>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example thead th').each(function (i, v) {
+            // var title = $('#example tfoot th').eq( $(this).index() ).text();
+            var title = $(this).text();
+            if (title != "Actions") {
+                $(this).html(
+                '<input type="text" class="form-control" style="width:80px;" id="exampleInputName2" placeholder="' + title + '">'
+                );
+            }
+            else {
+                $(this).html('<div style="width:auto;">' + title + '</div>');
+            }
+        });
+
+        // DataTable
+        var table = $('#example').DataTable();
+
+        // Apply the search
+        table.columns().eq(0).each(function (colIdx) {
+            $('input', table.column(colIdx).header()).on('keyup change', function () {
+                table
+                    .column(colIdx)
+                    .search(this.value)
+                    .draw();
+            });
+        });
+        $('#print').on('click', function () {
+            reverse();
+            jQuery("#example").print({
+                noPrintSelector: ".actions",
+                // Add this on top
+               // append: "My Footer<br/>",
+                // Add this at bottom
+                //prepend: "<br/>jQueryScript.net",
+                title: "Al Omam International School"
+            });
+            reverseBack();
+
+        });
+        function reverseBack() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).text();
+                if (title != "Actions") {
+                    $(this).html(
+                    '<input type="text"  class="form-control" style="height:auto" id="exampleInputName2" placeholder="' + title + ' search">'
+                    );
+                }
+            });
+        }
+        function reverse() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).html();
+                var input = $('#exampleInputName2').attr('placeholder');
+                if (input != null) {
+                    var input = input.replace('search', '');
+                }
+                //            debugger
+                if (title != "Actions") {
+                    $(this).html(input);
+                }
+            });
+        }
+    });
+
+</script>
+
+
+@section Scripts{
+    <link href="~/Content/DataTables/datatables.min.css" rel="stylesheet" />
+    <script src="~/Content/DataTables/datatables.min.js"></script>
+}
+
+@section PageTitle{
+    <div class="page-title">
+        <div>
+            <h1>Teachers </h1>
+        </div>
+    </div>
+}
+<div class="row-fluid" >
+    <div class="span12">
+        <div class="box">
+            <div class="box-content">
+                <div class="btn-toolbar pull-right clearfix">
+                    <div class="btn-group">
+                        <a class="btn btn-circle show-tooltip" title="Add new record" href="AddEmployee"><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Edit selected" href="javascript:void(0)"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Delete selected" href="javascript:void(0)"><i class="fa fa-remove"></i></a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="print" class="btn btn-circle show-tooltip" title="Print" href="javascript:void(0)"><i class="fa fa-print"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Export to PDF" href="javascript:void(0)"><i class="fa fa-file-pdf-o"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Export to Exel" href="javascript:void(0)"><i class="fa fa-file-excel-o"></i></a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn btn-circle show-tooltip" title="Refresh" href="javascript:void(0)"><i class="fa fa-refresh"></i></a>
+                    </div>
+                </div>
+                <div class="clearfix" style="margin-top:10px"></div>
+                <table class="table table-advance" id="example" style="height:inherit">
+                    <thead class="table-head">
+                        <tr>
+                            <th>Employee number</th>
+                            <th>Employee name</th>
+                            <th>Employee Category</th>
+                            <th>Gender</th>
+                            <th>Employee Mob</th>
+                            <th class="actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+                                <td>@Model[i].Id</td>
+                                <td>@Model[i].FullName</td>
+                                <td>@Model[i].Category</td>
+                                <td>@Model[i].Gender</td>
+                                <td>@Model[i].MobileNumber</td>
+                                <td class="actions">
+                                    <a class="btn btn-success glyphicon glyphicon-ok-circle" href=@("/Admin/ViewEmployeeDetail/" + Model[i].Id)></a>
+                                    <a class="btn btn-info  glyphicon glyphicon glyphicon-pencil" href=@("/Admin/EditEmployee/"+Model[i].Id)></a>
+                                    <a href="@("#modal-"+i)" role="button" data-toggle="modal" class="btn btn-danger glyphicon glyphicon glyphicon-trash"></a>
+                                    <div id="@("modal-"+i)" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h3 id="myModalLabel2">Disabling User</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to disable user <strong>@(Model[i].FullName) </strong>?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+                                            <a href=@("/Admin/DeleteEmployee/"+Model[i].Id) class="btn btn-primary">Yes</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

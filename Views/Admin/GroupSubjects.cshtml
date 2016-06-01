@@ -1,0 +1,123 @@
+﻿@model SchoolManagementSystem.Models.GroupViewModel
+@{
+    ViewBag.Title = "GroupSubjects";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div>
+    <h2>Create New Report Card</h2>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <div class="row-fluid">
+            <div class="box box-black">
+                <div class="box-title">
+                    <h3>Grade Information</h3>
+                    <div class="box-tool">
+                        <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group">
+                                <label for="grad">Grade</label>
+                                <div class="controls">
+                                    <input type="text" class="input-xlarge" readonly name="Grade" id="Grade" value="@Session["EGrade"]" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <div class="control-group">
+                                <label for="grad">Quarter</label>
+                                <div class="controls">
+                                    <input type="text" class="input-xlarge" readonly name="Quarter" id="Quarter" value="@Session["EQuarter"]" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="box box-gray    ">
+                <div class="box-title">
+                    <h3>Subject Groups</h3>
+                    <div class="box-tool">
+                        <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+
+                    <table class="table table-striped table-hover fill-head">
+                        <thead>
+                            <tr>
+                                <th>Group Name</th>
+                                <th>Subjects</th>
+                                <th style="width: 150px" class="actions">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                            foreach (var x in Model.examGroupSubject)
+                            {
+
+                                <tr>
+                                    <td>@x.Name</td>
+                                    <td>@x.BigName</td>
+                                    <td>
+                                        @*<a class="btn btn-primary btn-small" href="#"><i class="icon-edit"></i> Edit</a>
+                                        <a class="btn btn-danger btn-small" href="#"><i class="icon-trash"></i> Delete</a>*@
+                                        <a class="btn btn-info  glyphicon glyphicon glyphicon-pencil bcc" style="width:40px;" href="@("/Admin/EditGroup/"+x.Id)"></a>
+                                        <a data-confirm="Are you sure?" class="btn btn-danger glyphicon glyphicon glyphicon-trash" data-method="delete" href="@("/Admin/DeleteGroup/"+x.Id)"></a>
+                                    </td>
+                                </tr>
+                            }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="box ">
+                <div class="box-title">
+                    <h3>Groups Remaining Subjects</h3>
+                    <div class="box-tool">
+                        <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
+                    </div>
+                </div>
+                <div class="box-content tab-content">
+                    <form action="/Admin/GroupSubjects?length=@Model.subjects.Count" method="post">
+                        <div>
+                            @{
+                            foreach (var x in Model.subjects)
+                            {
+                                <div class="row-fluid">
+                                    <p class="span4">@x.Name</p>
+                                    <div class="controls span3">
+                                        <input type="checkbox" name="SubjectList" id="subjectLists" value="@x.Id" />
+                                    </div>
+                                </div>
+                            }
+                            }
+                        </div>
+                        <div class="pull-right">
+                            <button class="btn btn-success btn-large" id="Group">Group Subjects</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <br />
+        <div class="row-fluid">
+            <div class="span1">
+                <a href="/Admin/ChangeEditHeadings" class="btn btn-success">Back</a>
+            </div>
+            <div class="span2">
+                <a href="/Admin/PreviewResultCard" class="btn btn-primary">Preview Report Card</a>
+            </div>
+        </div>
+    </div>
+</div>

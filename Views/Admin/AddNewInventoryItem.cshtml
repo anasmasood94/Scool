@@ -1,0 +1,56 @@
+﻿@model SchoolManagementSystem.Models.InventoryItem
+@{
+    ViewBag.Title = "AddNewInventoryItem";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<SelectListItem> gradeList = ViewBag.GradeSelectList;
+    List<SelectListItem> cList = ViewBag.CategorySelectList;
+    int uniID = ViewBag.UniformValue;
+}
+
+<script>
+    $(document).ready(function () {
+        $("#category").change(function () {
+            debugger
+        f1();
+        $("#category").change(function () {
+            debugger
+            f1();
+        });
+        function f1()
+        {
+            var catType = $("#category").val();
+            if (catType == "3") {
+                $("#unifromType").show();
+                $("#unifromType").attr("required", true);
+            }
+            else {
+                $("#unifromType").hide();
+                $("#unifromType").attr("required", false);
+            }
+        }
+        })
+    })
+</script>
+
+<div class="container">
+    <div class="row">
+        <h2>AddNewInventoryItem</h2>
+    </div>
+    <div class="row">
+        <form action="/Admin/AddNewInventoryItem" method="post">
+            <input type="text" name="ItemName" placeholder="Enter Item name" required />
+            @Html.DropDownList("ItemCategory", cList, new { @class = "dropdown", required = "required", id = "category" })
+            @Html.DropDownList("GradeId", gradeList, new { @class = "dropdown", required = "required" })
+            <input type="number" name="PurchasedPrice" placeholder="Enter PurchasedPrice" required />
+            <input type="number" name="SalePrice" placeholder="Enter SalePrice" required />
+            <input type="number" name="Quantity" placeholder="Enter Quantity" required />
+            <select id="unifromType" name="UniformSize" hidden>
+                <option value=""></option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select>
+            <input type="submit" value="Add item" />
+        </form>
+    </div>
+</div>

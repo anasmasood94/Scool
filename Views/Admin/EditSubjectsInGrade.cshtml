@@ -1,0 +1,114 @@
+﻿@model List<SchoolManagementSystem.Models.GradeSubject>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@{
+    var subjectList = ViewBag.subjectList;
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.lec-per-week').on('focusout', function () {
+            var count = 0;
+            $('.lec-per-week').each(function () {
+                var lecture = 0;
+                lecture = ($(this).val());
+                lecture = parseInt(lecture);
+                if (!(isNaN(lecture))) {
+                    count = count + lecture;
+                }
+                $('.lec-count').html(count);
+            });
+        });
+
+        $('form').on('submit', function () {
+            if (parseInt($('.lec-count').html()) > 40) {
+                alert('Lec. Per Week Is Greater Than 40.');
+                return false;
+            }
+            else {
+                return true;
+            }
+
+        });
+        $('.select-subject').click(function () {
+            debugger
+            var count = parseInt($('.subject-count').html());
+            if ($(this).is(':checked')) {
+                $(this).parents('.parent-row').find('.lec-per-week').prop('required', true);
+                count += 1;
+            }
+            else {
+                $(this).parents('.parent-row').find('.lec-per-week').prop('required', false);
+                count -= 1;
+            }
+            $('.subject-count').html(count);
+        });
+        $('#Boss-Checkbox').click(function () {
+        });
+    });
+</script>
+
+
+
+@section PageTitle{
+    <div class="page-title">
+        <h1>Add Subjects to Grade</h1>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>Select Subjects for Grade @ViewBag.gradeName</h3>
+    </div>
+    <div class="box-content">
+        <form action="/Admin/AddSubjectsInGrade2" accept-charset="UTF-8" method="post">
+            <input type="hidden" value="@(ViewBag.gradeName)" name="gradeName" />
+            <div class="row-fluid">
+                <div class="span6">
+                    <h3>Selected: <span class="subject-count">0</span>/@(subjectList.Count)</h3>
+                </div>
+                <div class="span6">
+                    <h3>Lec Per Week: <span class="lec-count">0</span>/40</h3>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <table class="table table-advance">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting_disabled" role="columnheader">
+                                <input type="checkbox" id="Boss-Checkbox" />
+                            </th>
+                            <th class="sorting_disabled" role="columnheader">Subject Name</th>
+                            <th class="sorting_disabled" role="columnheader">Lec. Per Week</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            for (int i = 0; i < @subjectList.Count; i++)
+                            {
+                                <tr class="parent-row">
+                                    <td>
+                                        <input type="checkbox" name=@("["+i+"].SubjectId") value="@(subjectList[i].Id)" data-subject="1" class="checkbox1 select-subject check_1" />
+                                    </td>
+                                    <td>@(subjectList[i].Name)</td>
+                                    <td>
+                                        <input type="text" name=@("["+i+"].LecsPerWeek") class="form-control numeric lec-per-week" placeholder="Lec. Per Week." />
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="row-fluid">
+                <div class="span3 pull-right">
+                    <input type="submit" class="btn btn-success" />
+                </div>
+                <div class="span3">
+                    <a href="@Url.Action("EditGrade", "Admin", new { @Id = ViewBag.GradeId, @val =455}) " id="BackButton" class="btn btn-primary">Back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

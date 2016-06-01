@@ -1,0 +1,63 @@
+﻿@model SchoolManagementSystem.Models.Employee
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="box">
+            <div class="box-title">
+                <h3><i class="icon-reorder"></i>Create User</h3>
+            </div>
+            <div class="box-content">
+                <form class="form-horizontal" action="#" method="post">
+                    <div id="form-wizard-1" class="form-wizard">
+                        <div class="tab-content">
+                            <div id="tab1-2" class="tab-pane">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Full Name</label>
+                                <div class="controls">
+                                    <input type="text" class="span5" name="FullName" id="FullName" value="@Model.FullName" readonly>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Email</label>
+                                <div class="controls">
+                                    <input type="text" class="span5" id="Email" name="Email" value="@Model.Email    ">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Role</label>
+                                <div class="controls">
+                                    <select tabindex="1" class="input-xlarge span5" id="Role" name="Category">
+                                        <option value="1">Admin</option>
+                                        <option value="3">Superuser</option>
+                                        <option value="4">Acadmic</option>
+                                        @*<option value="5">Student</option>
+                                        <option value="6">Student</option>
+                                        <option value="7">Financial Affairs</option>
+                                        <option value="8">General Administration</option>
+                                        <option value="9">Academic Affairs1</option>
+                                        <option value="10">Academic Affairs2</option>
+                                        <option value="11">TEST ROLE</option>
+                                        <option value="12">ahmad</option>
+                                        <option value="13">asst controller</option>*@
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="actions pull-right">
+                                <input type="submit" name="commit" value="Update User" class="btn btn-success">
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    
+

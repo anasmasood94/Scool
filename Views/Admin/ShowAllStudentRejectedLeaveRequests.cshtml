@@ -1,0 +1,163 @@
+﻿@{
+    ViewBag.Title = "ShowAllStudentRejectedLeaveRequests";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@model List<SchoolManagementSystem.Models.StudentLeavesViewModel>
+
+<script>
+
+
+    //$(document).ready(function () {
+
+    //    $('#example thead th').each(function (i, v) {
+    //        // var title = $('#example tfoot th').eq( $(this).index() ).text();
+    //        var title = $(this).text();
+    //        if (title != "Actions") {
+    //            $(this).html(
+    //            '<input type="text" class="form-control" id="exampleInputName2" placeholder="' + title + '">'
+    //            );
+    //        }
+    //        else {
+    //            $(this).html('<div style="width:120px;">' + title + '</div>');
+    //        }
+    //    });
+
+    //    // DataTable
+    //    var table = $('#example').DataTable();
+
+    //    // Apply the search
+    //    table.columns().eq(0).each(function (colIdx) {
+    //        $('input', table.column(colIdx).header()).on('keyup change', function () {
+    //            table
+    //                .column(colIdx)
+    //                .search(this.value)
+    //                .draw();
+    //        });
+    //    });
+    //    $('#print').on('click', function () {
+    //        reverse();
+    //        jQuery("#example").print({
+    //            noPrintSelector: ".actions",
+    //            // Add this on top
+    //            //append: "My Footer<br/>",
+    //            // Add this at bottom
+    //            //prepend: "<br/>jQueryScript.net",
+    //            title: "Al Omam International School"
+    //        });
+    //        reverseBack();
+
+    //    });
+    //    function reverseBack() {
+    //        $('#example thead th').each(function (i, v) {
+    //            // var title = $('#example tfoot th').eq( $(this).index() ).text();
+    //            var title = $(this).text();
+    //            if (title != "Actions") {
+    //                $(this).html(
+    //                '<input type="text"  class="form-control" style="height:auto" id="exampleInputName2" placeholder="' + title + ' search">'
+    //                );
+    //            }
+    //        });
+    //    }
+    //    function reverse() {
+    //        $('#example thead th').each(function (i, v) {
+    //            // var title = $('#example tfoot th').eq( $(this).index() ).text();
+    //            var title = $(this).html();
+    //            var input = $('#exampleInputName2').attr('placeholder');
+    //            if (input != null) {
+    //                var input = input.replace('search', '');
+    //            }
+    //            //            debugger
+    //            if (title != "Actions") {
+    //                $(this).html(input);
+    //            }
+    //        });
+    //    }
+    //});
+
+    $(document).ready(function () {
+        $(".request").submit(function () {
+            var a = $(this).parent().parent().find('.status');
+            $(this).find('.formStatus').val(a.val());
+            return true;
+        });
+    });
+
+</script>
+
+<div class="page-title">
+    <div>
+        <h1><i class="fa fa-list"></i> Employee Leaves Requests </h1>
+    </div>
+</div>
+
+<div class="row-fluid" style="overflow:scroll">
+    @if (ViewBag.Message != null)
+    {
+        <div style=" margin-top:20px;">
+            <div class="alert alert-info main-alert">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <div id="flash_info">@ViewBag.Message</div>
+            </div>
+        </div>
+
+    }
+    <div class="span12">
+        <div class="box">
+            <div class="box-content">
+                <div class="btn-toolbar pull-right clearfix">
+                    <div class="btn-group">
+                        <a class="btn btn-circle show-tooltip" title="Add new record" href="AddNewStudent"><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Edit selected" href="javascript:void(0)"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Delete selected" href="javascript:void(0)"><i class="fa fa-remove"></i></a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="print" class="btn btn-circle show-tooltip" title="Print" href="javascript:void(0)"><i class="fa fa-print"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Export to PDF" href="javascript:void(0)"><i class="fa fa-file-pdf-o"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Export to Exel" href="javascript:void(0)"><i class="fa fa-file-excel-o"></i></a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn btn-circle show-tooltip" title="Refresh" href="javascript:void(0)"><i class="fa fa-refresh"></i></a>
+                    </div>
+                </div>
+                <div class="clearfix" style="margin-top:10px"></div>
+                <table class="table table-advance" id="example" style="height:inherit">
+                    <thead class="table-head">
+                        <tr>
+                            <th>Emp Id</th>
+                            <th>Employee Name</th>
+                            <th>Reason</th>
+                            <th>Disciption</th>
+                            <th>Leave From</th>
+                            <th>Leave to</th>
+                            <th class="actions">Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.StudentId</td>
+                                <td>@item.StudentName</td>
+                                <td>@item.LeaveReason</td>
+                                <td>@item.Discription</td>
+                                <td>@item.LeaveStart</td>
+                                <td>@item.LeaveEnd</td>
+                                <td>
+                                    <div class=""> @item.StatusDiscription</div>
+                                    <div class=""> <span style="background:red; border-radius: 50%; color:white; padding:1%"><i class="glyphicon glyphicon-remove"></i></span></div>
+
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+﻿@model SchoolManagementSystem.Models.Grade
+@{
+    ViewBag.Title = "AddNewGrade";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<div id="content" class="app-content" role="main">
+    <div class="app-content-body ">
+
+        <div class="hbox hbox-auto-xs hbox-auto-sm" style="background-color: white; padding: 0 15px 0">
+
+            <div style=" margin-top:20px;"></div>
+
+            <div class="bg-light lter b-b wrapper-md">
+                <h1 class="m-n font-thin h3">Edit Grade</h1>
+            </div>
+            <form id="new_grade" action="/Admin/EditGrade" accept-charset="UTF-8" method="post">
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <div class="container form-holder">
+                    <div class="row">
+                        <br>
+                        <fieldset class="sss well well-lg">
+                            <legend class="lll">Grade Information</legend>
+                            <div class="row">
+                                <div class="column col-xs-12 col-sm-6">
+                                    <div class="form-group ">
+                                        <div class="field">
+                                            <label for="grade_Grade_name">Grade name</label><br>
+                                            <input style="height:34px;" class="form-control" readonly type="text" name="GradeName" value="@(Model.Name)" id="gradeName" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column col-xs-12 col-sm-6">
+                                    <div class="form-group ">
+                                        <div class="field">
+                                            <label for="gradeMaxStudent">Max. No. of students per class</label><br>
+                                            <input style="height:34px;" class="form-control" value="@(Model.MaxStudents)" required type="text" name="MaxStudents"  id="gradeMaxStudent" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="actions">
+                            <input type="submit" name="commit" value="Update" class="btn btn-block btn-success form-control" style="width:24%;float: right;" />
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <style type="text/css">
+                .container {
+                    width: auto;
+                }
+
+                .sss {
+                    border: 1px solid#e5e5e5;
+                    padding: 1%;
+                }
+
+                .lll {
+                    width: auto !important;
+                    background-color: white;
+                    padding-right: 16px;
+                    padding-left: 15px;
+                    border: 1px solid;
+                    border-color: #729F32;
+                    border-radius: 21px;
+                }
+
+                #error_explanation {
+                    color: #dc6650;
+                }
+
+                .form-holder .col-sm-4 {
+                    min-height: 84px;
+                }
+
+                .form-holder .form-control {
+                    width: 100%;
+                }
+
+                .form-control {
+                    border-radius: 7px;
+                    border: black;
+                }
+            </style>
+
+
+        </div>
+
+
+    </div>
+</div>

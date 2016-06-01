@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "EditAttendence";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model List<SchoolManagementSystem.Models.AttendenceViewModel>
+
+@section Scripts{
+
+}
+@section PageTitle{
+    <div class="page-title">
+        <h1>Edit Student Attendance</h1>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>Edit Attendance</h3>
+    </div>
+    <div class="box-content">
+        <form method="post" action="EditAttendence">
+            <input type="hidden" name="ClassId" value="@(ViewBag.ClassId)" />
+            <input type="hidden" name="Date" value="@(ViewBag.Date)" />
+            <table class="table table-advance">
+                <thead>
+                    <tr>
+                        <td>Student Name</td>
+                        <td>Present/Absent</td>
+                        <td>Late</td>
+                        <td>Leave</td>
+                        <td>Leave Reason</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int i = 0;}
+                    @foreach (var l in Model)
+                    { 
+                        <tr>
+                            <td>@l.StudentName</td>
+                            <td>
+                                @if (l.Present)
+                                {
+                                    <input type="checkbox" class="checkbox" value="@(l.StudentId)" name=Present checked />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" class="checkbox" value="@(l.StudentId)" name=Present />
+                                }
+                            </td>
+                            <td>
+                                @if (l.Late)
+                                {
+                                    <input type="checkbox" class="checkbox" value="@(l.StudentId)" name=Present checked />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" class="checkbox" value="@(l.StudentId)" name=Present />
+                                }
+                            </td>
+                            <td>
+                                @if (l.Leave)
+                                {
+                                    <input type="checkbox" class="checkbox" value="@(l.StudentId)" name=Present checked />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" class="checkbox" value="@(l.StudentId)" name=Present />
+                                }
+                            </td>
+                            <td>@l.LeaveReason<input type="hidden" value="@(l.StudentId)" name=@("[" + i + "].StudentId") /></td>
+                        </tr>
+                        { i++; }
+                    }
+                </tbody>
+            </table>
+            <div class="form-actions">
+                <input type="submit" class="btn btn-success" value="Submit Attendence" />
+            </div>
+        </form>
+    </div>
+</div>

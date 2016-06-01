@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Temp";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<script>
+    $(document).ready(function () {
+        $('#temp').on('change', function () {
+            var b = $(this);
+            var a = $(this).val();
+            var secondDdl = $('#Dd2');
+            secondDdl.empty();
+
+
+
+
+            $.ajax({
+                url: "/Admin/Temp2/?classId=" + a,
+                dataType: 'JSON',
+                type: 'GET',
+                error: function () {
+                    alert("ubalbe to fetch data");
+                },
+                success: function (result) {
+                    var secondDdl = $('#Dd2');
+                    $.each(result, function () {
+                        $('<option>', {
+                            value: this.Value
+                        }).html(this.Text).appendTo(secondDdl);
+                    });
+                    
+                }
+            });
+
+
+
+
+        })
+    })
+</script>
+<div class="container">
+    @{
+        List<SelectListItem> gList = ViewBag.GradeList;
+    }
+    @Html.DropDownList("GradeName", gList, new { @id = "temp" })
+    <select id="Dd2"></select>
+</div>

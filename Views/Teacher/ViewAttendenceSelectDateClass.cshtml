@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "ViewAttendenceSelectDateClass";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    List<SelectListItem> clsList = ViewBag.classList;
+}
+@section Scripts{
+    <link href="~/Content/assets/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+    <script src="~/Content/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
+}
+@section PageTitle{
+    <div class="page-title">
+        <h1>View Attendance</h1>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>Select Grade and Date</h3>
+    </div>
+    <div class="box-content">
+        <br />
+        <form method="post" action="ViewAttendenceSelectDateClass2">
+
+            <div class="row-fluid">
+                <div class="span5 offset1">
+                    <label>Select Class</label>
+                    @Html.DropDownList("ClassId", clsList, new { @class = "", required = "required" })
+                </div>
+                <div class="span5">
+                    <label>Select Date</label>
+                    <div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                        <input type="text" class="date-picker" name="Date" required />
+                        <span class="add-on"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <input type="submit" class="btn btn-primary pull-right" value="Go To attedence" />
+
+            </div>
+        </form>
+    </div>
+</div>

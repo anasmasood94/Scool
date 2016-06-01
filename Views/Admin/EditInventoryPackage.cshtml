@@ -1,0 +1,223 @@
+﻿@model SchoolManagementSystem.Models.PackageItemsViewModel
+@using SchoolManagementSystem.Models;
+@{
+    
+    ViewBag.Title = "EditInventoryPackage";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<SelectListItem> gList = ViewBag.GradeSelectList;
+    List<ListInventoryItemsViewModel> VmInvenList = ViewBag.VmInvenList;
+
+}
+
+<script>
+    $(document).ready(function () {
+        $("#grade").val(@Model.GradeId);
+    });
+    $(document).ready(function () {
+        //f1();
+        $("#grade").click(function () {
+            $("#totalPackagePrice").val(0);
+            $("#totalPrice").val(0);
+
+
+            f1();
+        });
+        function f1() {
+            $("#table").hide();
+            $("#tableBody").empty();
+            var gradeId = $("#grade").val();
+            $.ajax({
+                url: "/Admin/GetAllItemsInGrade/" + gradeId,
+                dataType: 'json',
+                type: 'get',
+                error: function () {
+                    alert("No item found");
+                    $("#table").hide();
+                },
+                success: function (result) {
+                    $.each(result, function () {
+                        $("#tableBody").append('<tr>' +
+                            '<th >' + '<input type="checkbox" class="selectItem" id="selectItem" name="items" value="' + this.Id + '" />' + '</th>' +
+                            '<th>' + this.ItemName + '</th>' +
+                            '<th>' + this.ItemCategoryName + " " + this.UniformSize + '</th>' +
+                            '<th>' + this.PurchasedPrice + '</th>' +
+                            '<th id="salePrice">' + this.SalePrice + '</th>' +
+                            '<th>' + '<input type="number" class="packagePrice" id="packagePrice" value="0" name="' + this.Id + '" disabled />' + '</th>' +
+                            '</tr>');
+                    });
+
+                    $(".selectItem").change(function () {
+                        $("#totalPrice").val(0);
+                        $(".selectItem").each(function () {
+                            debugger
+                            if (this.checked) {
+                                var p1 = $(this).parent();
+                                var p2 = p1.parent();
+                                var salePrice = p2.children("#salePrice").text();
+                                p2.find("#packagePrice").attr("required", true);
+                                p2.find("#packagePrice").attr("disabled", false);
+                                $("#totalPrice").val(parseFloat($("#totalPrice").val()) + parseFloat(salePrice));
+
+                            }
+                            else {
+                                var p1 = $(this).parent();
+                                var p2 = p1.parent();
+                                p2.find("#packagePrice").attr("required", false);
+                                p2.find("#packagePrice").val(0);
+                                p2.find("#packagePrice").attr("disabled", true);
+
+                            }
+                        });
+                        CalPackagePrice();
+                    });
+
+
+
+                    $(".packagePrice").change(function () {
+                        CalPackagePrice();
+                    });
+
+                    function CalPackagePrice() {
+                        $("#totalPackagePrice").val(0);
+                        $(".packagePrice").each(function () {
+                            debugger
+                            var p1 = $(this).parent();
+                            $(this).siblings()
+                            var p2 = p1.parent();
+                            var checkBox = p1.find("#selectItem");
+
+
+
+                            var packagePrice = $(this).val();
+                            $("#totalPackagePrice").val(parseFloat($("#totalPackagePrice").val()) + parseFloat(packagePrice));
+
+
+                        });
+
+                    }
+
+
+
+                    $("#table").show();
+                }
+
+
+            });
+
+        }
+
+        $(".selectItem").change(function () {
+            $("#totalPrice").val(0);
+            $(".selectItem").each(function () {
+                debugger
+                if (this.checked) {
+                    var p1 = $(this).parent();
+                    var p2 = p1.parent();
+                    var salePrice = p2.children("#salePrice").text();
+                    p2.find("#packagePrice").attr("required", true);
+                    p2.find("#packagePrice").attr("disabled", false);
+                    $("#totalPrice").val(parseFloat($("#totalPrice").val()) + parseFloat(salePrice));
+
+                }
+                else {
+                    var p1 = $(this).parent();
+                    var p2 = p1.parent();
+                    p2.find("#packagePrice").attr("required", false);
+                    p2.find("#packagePrice").val(0);
+                    p2.find("#packagePrice").attr("disabled", true);
+
+                }
+            });
+            CalPackagePrice();
+        });
+
+
+
+        $(".packagePrice").change(function () {
+            CalPackagePrice();
+        });
+
+        function CalPackagePrice() {
+            $("#totalPackagePrice").val(0);
+            $(".packagePrice").each(function () {
+                debugger
+                var p1 = $(this).parent();
+                $(this).siblings()
+                var p2 = p1.parent();
+                var checkBox = p1.find("#selectItem");
+
+
+
+                var packagePrice = $(this).val();
+                $("#totalPackagePrice").val(parseFloat($("#totalPackagePrice").val()) + parseFloat(packagePrice));
+
+
+            });
+
+        }
+
+    });
+</script>
+<h2>EditInventoryPackage</h2>
+
+
+<div class="container">
+    <div class="row">
+
+        <form action="/Admin/EditInventoryPackage" method="post">
+            <div class="row">
+                <input type="text" name="PackageName" placeholder="Enter Package Name" value="@Model.PackageName" required />
+                @Html.DropDownList("GradeId", gList, new { @class = "dropdown", id = "grade" })
+                <input type="hidden" value="@Model.PackageId" name="Id" />
+            </div>
+
+            <div class="row">
+                <table class="table table-advance" id="table" style="height:inherit" >
+                    <thead class="table-head">
+                        <tr>
+                            <th>Select Item</th>
+                            <th>Item Name</th>
+                            <th>Category Name</th>
+                            <th>Purchased Price</th>
+                            <th>Sale Price</th>
+                            <th>Package Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        @foreach (var item in Model.ItemsList)
+                        {
+                            <tr>
+                                <th><input type="checkbox" class="selectItem" id="selectItem" name="items" value=@(item.ItemId) checked /> </th>
+
+                                <th>  @item.ItemName  </th>
+
+                                <th>  @(item.ItemCategoryName + " " + item.UniformSize)  </th> 
+
+                                <th>  @item.PurchasedPrice  </th>
+
+                                <th id="salePrice">  @item.SalePrice  </th>
+
+                                <th> <input type="number" class="packagePrice" id="packagePrice" value=@item.PackagePrice name="ItemPriceList"  /> </th>
+
+
+
+
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <label>total price</label>
+                <input type="text" id="totalPrice" value=@(Model.TotalPrice) name="TotalPrice" readonly /> <br />
+                <label>Package Price</label>
+                <input type="text" id="totalPackagePrice" name="PackagePrice" value="@(Model.PackagePrice)" />
+
+            </div>
+            <br />
+
+            <input type="submit" value="Create Package" />
+        </form>
+    </div>
+</div>

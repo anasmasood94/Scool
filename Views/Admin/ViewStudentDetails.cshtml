@@ -1,0 +1,335 @@
+﻿
+@{
+    ViewBag.Title = "ViewStudentDetails";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section PageTitle{
+<div class="page-title">
+    <div>
+        <h1>View Student </h1>
+    </div>
+</div>
+}
+        <div class="box">
+            <div class="box-title">
+                <h3>Student Information</h3>
+            </div>
+            <div class="box-content">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h2>@Model.FirstName @Model.SecondName @Model.ThirdName @Model.FourthName</h2>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Roll No</td>
+
+                                    <td>@Model.Id</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="student-profile-td">
+                                        Grade
+                                    </td>
+
+                                    <td>@Model.Grade</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="student-profile-td">
+                                        Date of Birth
+                                    </td>
+
+                                    <td>@Model.DateOfBirth</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="student-profile-td">
+                                        Iqama Number
+                                    </td>
+
+                                    <td>@Model.IqamaNo</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="student-profile-td">
+                                        Iqama Expiry
+                                    </td>
+
+                                    <td>@Model.IqamaExpiry</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="span4">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td class="student-profile-td">
+                                        Gender
+                                    </td>
+
+                                    <td>
+                                        @Model.Gender
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="student-profile-td">
+                                        Nationality
+                                    </td>
+
+                                    <td>
+                                        @Model.Nationality
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="student-profile-td">
+                                        Mother Language
+                                    </td>
+
+                                    <td>
+                                        @Model.Language
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="student-profile-td">
+                                        Religion
+                                    </td>
+
+                                    <td>
+                                        @Model.Religion
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="student-profile-td">
+                                        Joining Quater
+                                    </td>
+
+                                    <td>
+                                        @Model.Quater
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <!-- <p>Section:<label>A</label></p> -->
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="row-fluid">
+                    <div class="span12">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#ContactDetails" aria-controls="messages" role="tab" data-toggle="tab">Contact details</a></li>
+                            <li role="presentation"><a href="#PreviousDetails" aria-controls="messages" role="tab" data-toggle="tab">Previous details</a></li>
+                            <li role="presentation"><a href="#MedicalBackground" aria-controls="messages" role="tab" data-toggle="tab">Medical Background</a></li>
+                        </ul>
+
+                        <br>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="ContactDetails">
+                                <div class="span3">
+                                    <div class="box box-blue">
+                                        <div class="box-title">
+                                            Personal Details
+                                        </div>
+                                        <div class="box-content">
+                                            <table class="table">
+                                                <tr>
+                                                    <td>Address 1</td>
+                                                    <td>@Model.Address1</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Address 2</td>
+                                                    <td>@Model.Address2</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>City</td>
+                                                    <td>@Model.City</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Country</td>
+                                                    <td>@Model.Country</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Phone</td>
+                                                    <td>@Model.HomePhone</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Email</td>
+                                                    <td>@Model.Email</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="span3">
+                                    <div class="box box-blue">
+                                        <div class="box-title">
+                                            Parent Details
+                                        </div>
+                                        <div class="box-content">
+                                            <table class="table">
+                                                <tr>
+                                                    <td>Father Name</td>
+                                                    <td>@Model.FatherName</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Iqama Number</td>
+                                                    <td>@Model.FatherIqamaNumber</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Iqama Expiry</td>
+                                                    <td>@Model.FatherIqamaExpiry</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Mother Name</td>
+                                                    <td>@Model.MotherName</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="span3">
+                                    <div class="box box-blue">
+                                        <div class="box-title">
+                                            Parent Contact Details
+                                        </div>
+                                        <div class="box-content">
+                                            <table class="table">
+                                                <tr>
+                                                    <td>Mobile</td>
+                                                    <td>@Model.MobileNumber</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Email</td>
+                                                    <td>@Model.Email</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Mother Mobile</td>
+                                                    <td>@Model.MotherMobile</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Mother Email</td>
+                                                    <td>@Model.MotherEmail</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="span3">
+                                    <div class="box box-blue">
+                                        <div class="box-title">
+                                            Emergency Contact
+                                        </div>
+                                        <div class="box-content">
+                                            <table class="table">
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>@Model.EmergencyName</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Email</td>
+                                                    <td>@Model.EmergencyEmail</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Contact</td>
+                                                    <td>@Model.EmergencyPhone</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="PreviousDetails">
+                                <div class="span12">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <td>Previous Institute</td>
+                                                <td>Passing Year</td>
+                                                <td>Total Marks</td>
+                                                <td>Obtained Marks</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@Model.PreviousInstitue</td>
+                                                <td>@Model.PassingYear</td>
+                                                <td>@Model.TotalMarks</td>
+                                                <td>@Model.ObtainedMarks</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <hr>
+                                </div>
+                            </div>
+
+
+                            <div role="tabpanel" class="tab-pane" id="MedicalBackground">
+                                <div class="span6">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="student-profile-td">Current Weight</td>
+                                                <td>@Model.Weight</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="student-profile-td">Current Height</td>
+                                                <td>@Model.Height</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="student-profile-td">Blood Group</td>
+                                                <td>@Model.BloodGroup</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="student-profile-td">Special Needs</td>
+                                                <td>@Model.SpeicialNeeds</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="span6">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="student-profile-td">Learning Disability</td>
+                                                <td>@Model.Disability</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+

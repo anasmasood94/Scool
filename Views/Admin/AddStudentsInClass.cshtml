@@ -1,0 +1,127 @@
+﻿@model List<SchoolManagementSystem.Models.Student>
+
+@{
+    ViewBag.Title = "AddStudentsInClass";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $('#example thead th').each(function (i, v) {
+            // var title = $('#example tfoot th').eq( $(this).index() ).text();
+            var title = $(this).text();
+            if (title != "Actions") {
+                $(this).html(
+                '<input type="text" class="form-control" id="exampleInputName2" placeholder="' + title + '">'
+                );
+            }
+            else {
+                $(this).html('<div style="width:120px;">' + title + '</div>');
+            }
+        });
+
+        // DataTable
+        var table = $('#example').DataTable();
+
+        // Apply the search
+        table.columns().eq(0).each(function (colIdx) {
+            $('input', table.column(colIdx).header()).on('keyup change', function () {
+                table
+                    .column(colIdx)
+                    .search(this.value)
+                    .draw();
+            });
+        });
+
+        $('#form1').submit(function () {
+            debugger
+            var chk = $('input[type="checkbox"]');
+            chk.each(function () {
+                var v = $(this).attr('checked') == 'checked' ? 1 : 0;
+            });
+
+        });
+    });
+</script>
+
+@section Scripts{
+    <link href="~/Content/DataTables/datatables.min.css" rel="stylesheet" />
+    <script src="~/Content/DataTables/datatables.min.js"></script>
+    <script src="~/Scripts/jQuery.print.js"></script>
+    <script src="~/Scripts/Custom/PrintExample.js"></script>
+}
+@section PageTitle{
+    <div class="page-title">
+        <div>
+            <h1>Add Students Class</h1>
+        </div>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>Select Students</h3>
+    </div>
+    <div class="box-content">
+        <div class="btn-toolbar pull-right clearfix">
+            <div class="btn-group">
+                <a class="btn btn-circle show-tooltip" title="Add new record" href="AddNewStudent"><i class="fa fa-plus"></i></a>
+                <a class="btn btn-circle show-tooltip" title="Edit selected" href="javascript:void(0)"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-circle show-tooltip" title="Delete selected" href="javascript:void(0)"><i class="fa fa-remove"></i></a>
+            </div>
+            <div class="btn-group">
+                <a id="print" class="btn btn-circle show-tooltip" title="Print" href="javascript:void(0)"><i class="fa fa-print"></i></a>
+                <a class="btn btn-circle show-tooltip" title="Export to PDF" href="javascript:void(0)"><i class="fa fa-file-pdf-o"></i></a>
+                <a class="btn btn-circle show-tooltip" title="Export to Exel" href="javascript:void(0)"><i class="fa fa-file-excel-o"></i></a>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-circle show-tooltip" title="Refresh" href="javascript:void(0)"><i class="fa fa-refresh"></i></a>
+            </div>
+        </div>
+        <div class="clearfix" style="margin-top:10px"></div>
+        <form action="/Admin/AddStudentsInClass2" method="post" id="form1">
+            <table class="table table-advance" id="example" style="height:inherit">
+                <thead class="table-head">
+                    <tr>
+                        <th>Actions</th>
+                        <th>Id</th>
+                        <th>Username</th>
+                        <th>Grade</th>
+                        <th>Email</th>
+                        <th>Father Name</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="addedStudents" value="@item.Id" />
+                                <input type="hidden" name="addedStudentss" value="false" />
+                                <input type="hidden" name="addedStudentsId" value="@item.Id" />
+
+                            </td>
+                            <td>@item.Id</td>
+                            <td>@item.UserName</td>
+                            <td>@item.Grade</td>
+                            <td>@item.Email</td>
+                            <td>@item.FatherName</td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+            <div class="row-fluid">
+                <div class="span2 pull-right">
+                    <input type="submit" class="btn btn-success btn-block" value="Add Students" />
+                </div>
+                <div class="span2">
+                    <a href="" class="btn btn-success">Back</a>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>

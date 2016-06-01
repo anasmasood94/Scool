@@ -1,0 +1,122 @@
+﻿@model List<SchoolManagementSystem.Models.StudentInvoiceViewModel>
+@{
+    ViewBag.Title = "ShowAllStudentsFee";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        $('#example thead th').each(function (i, v) {
+            // var title = $('#example tfoot th').eq( $(this).index() ).text();
+            var title = $(this).text();
+            if (title != "Actions") {
+                $(this).html(
+                '<input type="text" class="form-control" id="exampleInputName2" placeholder="' + title + '">'
+                );
+            }
+            else {
+                $(this).html('<div style="width:120px;">' + title + '</div>');
+            }
+        });
+
+        // DataTable
+        var table = $('#example').DataTable();
+
+        // Apply the search
+        table.columns().eq(0).each(function (colIdx) {
+            $('input', table.column(colIdx).header()).on('keyup change', function () {
+                table
+                    .column(colIdx)
+                    .search(this.value)
+                    .draw();
+            });
+        });
+        $('#print').on('click', function () {
+            reverse();
+            jQuery("#example").print({
+                noPrintSelector: ".actions",
+                // Add this on top
+                //append: "My Footer<br/>",
+                // Add this at bottom
+                //prepend: "<br/>jQueryScript.net",
+                title: "Al Omam International School"
+            });
+            reverseBack();
+
+        });
+        function reverseBack() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).text();
+                if (title != "Actions") {
+                    $(this).html(
+                    '<input type="text"  class="form-control" style="height:auto" id="exampleInputName2" placeholder="' + title + ' search">'
+                    );
+                }
+            });
+        }
+        function reverse() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).html();
+                var input = $('#exampleInputName2').attr('placeholder');
+                if (input != null) {
+                    var input = input.replace('search', '');
+                }
+                //            debugger
+                if (title != "Actions") {
+                    $(this).html(input);
+                }
+            });
+        }
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+    <table class="table table-striped" id="example">
+        <thead>
+            <tr>
+                <th>StudentId</th>
+                <th>StudentName</th>
+                <th>Grade</th>
+                <th>Mob Number</th>
+                <th>Paid</th>
+                <th>Rem Balance</th>
+                <th class="actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].StudentId</td>
+                    <td>@Model[i].StudentName</td>
+                    <td>@Model[i].GradeName</td>
+                    <td>@Model[i].MobileNumber</td>
+                    <td>@Model[i].Paid</td>
+                    <td>@Model[i].RemainingAmount</td>
+                    <td class="actions">
+                        <a href="#" class="btn btn-success glyphicon glyphicon-ok-circle"></a>
+                        <a href="#" class="glyphicon-edit"></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

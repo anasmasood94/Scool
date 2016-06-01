@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "AddFeeBreakDownsInGrade";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<SelectListItem> gradeList = ViewBag.gradeList;
+}
+
+
+<script>
+    $(document).ready(function () {
+        var count = 0;
+        $('#AddButton').click(function () {
+            $('#table').append('<tr>' +
+                '<td>' + '<input required readonly type=text placeholder=gradeid name=[' + count + '].GradeId value=' + $('#grade').val() + ' />' + '</td>' +
+                '<td><input type=text placeholder=Title name=[' + count + '].Title />' + '</td>' +
+                '<td>' + '<input type=text placeholder=Amount name=[' + count + '].Amount />' + '</td>' +
+                '<td>' +
+            '<a class="btn btn-danger glyphicon glyphicon glyphicon-trash delete" data-method="delete" ></a>'
+           + '</td></tr>');
+            count++;
+            $('.delete').click(function () {
+                $(this).parent().parent().remove();
+            });
+
+        });
+
+
+    })
+</script>
+@section Scripts{
+    <link href="~/Content/DataTables/datatables.min.css" rel="stylesheet" />
+    <script src="~/Content/DataTables/datatables.min.js"></script>
+}
+
+@section PageTitle{
+    <div>
+        <h1>Add Fee in Grade</h1>
+
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>Select Grade</h3>
+    </div>
+    <div class="box-content">
+        <label>Select Grade</label>
+        @Html.DropDownList("GradeList", gradeList, "Select Grade", new { @id = "grade" })
+    </div>
+</div>
+<div class="box">
+    <div class="box-title">
+        <h3>Enter Fee Breakdown</h3>
+    </div>
+    <div class="box-content">
+        <form action="AddFeeBreakDownsInGrade" method="post">
+            <div class="control-group pull-right">
+                <input class="btn btn-primary " type="button" value="Add New Fee Break Down" id="AddButton" />
+            </div>
+            <table class="table table-bordered" id="table">
+                <thead>
+                    <tr>
+                        <td>Grade Id</td>
+                        <td>Title</td>
+                        <td>Amount</td>
+                        <td>Action</td>
+                    </tr>
+
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div>
+                <input class="btn btn-primary" type="submit" value="Add In Grade" />
+            </div>
+        </form>
+    </div>
+</div>
+

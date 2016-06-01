@@ -1,0 +1,116 @@
+﻿@model List<SchoolManagementSystem.Models.Route>
+@{
+    ViewBag.Title = "ListAllRoutes";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example thead th').each(function (i, v) {
+            // var title = $('#example tfoot th').eq( $(this).index() ).text();
+            var title = $(this).text();
+            if (title != "Actions") {
+                $(this).html(
+                '<input type="text" class="form-control" id="exampleInputName2" placeholder="' + title + '">'
+                );
+            }
+            else {
+                $(this).html('<div>' + title + '</div>');
+            }
+        });
+
+        // DataTable
+        var table = $('#example').DataTable();
+
+        // Apply the search
+        table.columns().eq(0).each(function (colIdx) {
+            $('input', table.column(colIdx).header()).on('keyup change', function () {
+                table
+                    .column(colIdx)
+                    .search(this.value)
+                    .draw();
+            });
+        });
+        $('#print').on('click', function () {
+            reverse();
+            jQuery("#example").print({
+                noPrintSelector: ".actions",
+                // Add this on top
+                //append: "My Footer<br/>",
+                // Add this at bottom
+                //prepend: "<br/>jQueryScript.net",
+                title: "Al Omam International School"
+            });
+            reverseBack();
+
+        });
+        function reverseBack() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).text();
+                if (title != "Actions") {
+                    $(this).html(
+                    '<input type="text"  class="form-control" style="height:auto;width:" id="exampleInputName2" placeholder="' + title + ' search">'
+                    );
+                }
+            });
+        }
+        function reverse() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).html();
+                var input = $('#exampleInputName2').attr('placeholder');
+                if (input != null) {
+                    var input = input.replace('search', '');
+                }
+                //            debugger
+                if (title != "Actions") {
+                    $(this).html(input);
+                }
+            });
+        }
+    });
+
+</script>
+@section Scripts{
+    <link href="~/Content/DataTables/datatables.min.css" rel="stylesheet" />
+    <script src="~/Content/DataTables/datatables.min.js"></script>
+}
+@section PageTitle{
+    <div class="page-title">
+        <h1>Routes</h1>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>List of Routes</h3>
+    </div>
+    <div class="box-content"> 
+    <table class="table table-advance" id="example" style="height:inherit">
+        <thead class="table-head">
+            <tr>
+                <th>Route Name</th>
+                <th>Start Point</th>
+                <th>End Point</th>
+                <th class="actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].Name</td>
+                    <td>@Model[i].StartPoint</td>
+                    <td>@Model[i].EndPoint</td>
+                    <td class="actions">
+                        <a class="btn btn-success glyphicon glyphicon-ok-circle" href=@("/Admin/ViewAllBusesInRoute/" + Model[i].Id)></a>
+                        <a class="btn btn-info  glyphicon glyphicon glyphicon-pencil bcc" href=@("/Admin/EditRoute/"+Model[i].Id)></a>
+                        <a data-confirm="Are you sure?" class="btn btn-danger glyphicon glyphicon glyphicon-trash" rel="nofollow" data-method="delete" href=@("/Admin/DeleteRoute/" + Model[i].Id)></a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+        </div>
+</div>
+

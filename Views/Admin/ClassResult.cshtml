@@ -1,0 +1,177 @@
+﻿@{
+    ViewBag.Title = "ClassResult";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $('#SelectClass').on('change', function () {
+            var b = $(this);
+            var a = $(this).val();
+            var subject = $('#SelectSubject');
+            var exam = $('#SelectQuarter');
+            subject.empty();
+            exam.empty();
+
+            $.ajax({
+                url: "/Admin/GetSubjectList/?ClassId=" + a,
+                dataType: 'json',
+                type: 'GET',
+                error: function () {
+                    alert("unalbe to fetch data of subjects");
+                },
+                success: function (d) {
+                    var secondDdl = $('#SelectSubject');
+                    $.each(d, function () {
+                        $('<option>', {
+                            value: this.Value
+                        }).html(this.Text).appendTo(secondDdl);
+                    });
+                },
+
+
+            });
+
+
+            $.ajax({
+                url: "/Admin/GetExamList/?ClassId=" + a,
+                dataType: 'json',
+                type: 'GET',
+                error: function () {
+                    alert("unalbe to fetch data of Quarters");
+                },
+                success: function (result) {
+                    var second = $('#SelectQuarter');
+                    $.each(result, function () {
+                        $('<option>', {
+                            value: this.Value
+                        }).html(this.Text).appendTo(second);
+                    });
+                },
+            });
+        });
+
+        $('#GetMarks').click(function () {
+            var exam = $('#SelectQuarter').val();
+            var ClassId = $('#SelectClass').val();
+            $.ajax({
+                url: "/Admin/GetStudentMarksClass/?ClassId=" + ClassId + "&ExamId=" + exam,
+                dataType: 'json',
+                type: 'GET',
+                error: function () { alert("Unable to get Marks.") },
+                success: function (result) {
+                    $('#TableHeading').empty();
+                    $('#TableBody').empty();
+
+                    var subject = $('#SelectClass option:selected').text();
+                    var exam = $('#SelectQuarter option:selected').text();
+                    $('#MarksThingsTitle').text(exam + '    -    ' + subject);
+
+                    if (result.stdList[0].marks.length > 0) {
+                        var h = '<tr><th>Name</th>';
+                        var i = 0;
+                        while (i < result.MarksName.length) {
+                            h += '<th>' + result.MarksName[i] + '</th>';
+                            i++;
+                        }
+                        h += '</tr>';
+                        $('#TableHeading').append(h);
+
+                        var b = '';
+                        i = 0;
+                        var j = 0;
+
+                        while (i < result.stdList.length) {
+                            j = 0;  
+                            b += '<tr><td>' + result.stdList[i].StudentName + '</td>';
+                            while (j < result.stdList[i].marks.length) {
+                                b += '<td>' + result.stdList[i].marks[j] + '</td>';
+                                j++;
+                            }
+                            b += '</tr>';
+                            i++;
+                        }
+
+                        $('#TableBody').append(b);
+                        $('#MarksThings').show();
+                    }
+                }
+            });
+
+        });
+    });
+</script>
+@{
+    List<SchoolManagementSystem.Models.Exam> examList = ViewBag.examList;
+}
+
+@section PageTitle{
+<div class="page-title">
+    <h2>Class Result</h2>
+</div>
+    }
+<div class="box">
+    <div class="box-title">
+        <h3>Select Class</h3>
+    </div>
+    <div class="box-content">
+        <div class="row-fluid">
+            <div class="span3 offset1">
+                <label>Select Class</label>
+                <div class="controls">
+                    <select id="SelectClass">
+                        @{
+                    if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <option value="@item.ClassId">@(item.GradeName + " (" + item.ClassName + ")")</option>
+                        }
+                    }
+                }
+                    </select>
+                </div>
+            </div>
+            <div class="span3">
+                <label>Select Quarter</label>
+                <div class="controls">
+                    <select id="SelectQuarter">
+                        @{
+                            if (examList != null)
+                            {
+                                foreach (var item in examList)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            </div>
+        <div class="row-fluid">
+            <div class="span3 pull-right">
+                <label></label>
+                <div class="controls">
+                    <button class="btn btn-success" id="GetMarks" type="button">See Marks</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box" id="MarksThings" hidden>
+    <div class="box-title">
+        <h3 id="MarksThingsTitle"></h3>
+    </div>
+    <div class="box-content">
+        <label id="TableSubject"></label>
+        <table class="table table-advance" id="example" >
+            <thead class="table-head" id="TableHeading">
+
+            </thead>
+            <tbody id="TableBody">
+
+            </tbody>
+        </table>
+
+    </div>
+</div>

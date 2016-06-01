@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "ViewEmpAttendenceSelectDateClass";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section PageTitle{
+    <div class="page-title">
+        <h1>View Employee Attendance</h1>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>Select Date</h3>
+    </div>
+    <div class="box-content">
+
+        <div class="row">
+            <br /><br /><br />
+            <form method="post" action="ViewEmpAttendenceSelectDateClass2">
+                <div class="col-md-6 col-md-offset-1">
+                    <label>Select Date</label>
+                    <div class="controls">
+                        <div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                            <input class="date-picker" size="16" type="text" name="Date" required><span class="add-on"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label></label>
+                    <div class="controls">
+                        <input type="submit" class="btn btn-primary" value="Go To attedence" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

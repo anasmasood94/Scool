@@ -1,0 +1,136 @@
+﻿@model IEnumerable<SchoolManagementSystem.Models.Student>
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        
+        $('#example thead th').each(function (i, v) {
+            // var title = $('#example tfoot th').eq( $(this).index() ).text();
+            var title = $(this).text();
+            if (!$(this).hasClass('actions')) {
+                $(this).html(
+                '<input type="text"class="form-control exampleInputName2" style="width:85px !important;" placeholder="' + title + '">'
+                );
+            }
+        });
+
+        // DataTable
+        var table = $('#example').DataTable();
+
+        // Apply the search
+        table.columns().eq(0).each(function (colIdx) {
+            $('input', table.column(colIdx).header()).on('keyup change', function () {
+                table
+                    .column(colIdx)
+                    .search(this.value)
+                    .draw();
+            });
+        });
+        $('#print').on('click', function () {
+            reverse();
+            jQuery("#example").print({
+                noPrintSelector: ".actions",
+                // Add this on top
+                //append: "My Footer<br/>",
+                // Add this at bottom
+                //prepend: "<br/>jQueryScript.net",
+                title: "Al Omam International School"
+            });
+            reverseBack();
+
+        });
+        function reverseBack() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).text();
+                if (title != "Actions") {
+                    $(this).html(
+                    '<input type="text" class="form-control exampleInputName2" style="width:85px !important;" placeholder="' + title + ' search">'
+                    );
+                }
+            });
+        }
+        function reverse() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).html();
+                var input = $('.exampleInputName2').attr('placeholder');
+                if (input != null) {
+                    var input = input.replace('search', '');
+                }
+                //            debugger
+                if (title != "Actions") {
+                    $(this).html(input);
+                }
+            });
+        }
+    });
+
+</script>
+@section Scripts{
+    <link href="~/Content/DataTables/datatables.min.css" rel="stylesheet" />
+    <script src="~/Content/DataTables/datatables.min.js"></script>
+    <script src="~/Scripts/jQuery.print.js"></script>
+
+}
+@section PageTitle{
+<div class="page-title">
+    <div>
+        <h1><i class="fa fa-list"></i> Students </h1>
+    </div>
+</div>
+    }
+<div class="row-fluid" >
+    <div class="span12">
+        <div class="box">
+            <div class="box-content">
+                <div class="btn-toolbar pull-right clearfix">
+                    <div class="btn-group">
+                        <a class="btn btn-circle show-tooltip" title="Add new record" href="AddNewStudent"><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Edit selected" href="javascript:void(0)"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Delete selected" href="javascript:void(0)"><i class="fa fa-remove"></i></a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="print" class="btn btn-circle show-tooltip" title="Print" href="javascript:void(0)"><i class="fa fa-print"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Export to PDF" href="javascript:void(0)"><i class="fa fa-file-pdf-o"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Export to Exel" href="javascript:void(0)"><i class="fa fa-file-excel-o"></i></a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn btn-circle show-tooltip" title="Refresh" href="javascript:void(0)"><i class="fa fa-refresh"></i></a>
+                    </div>
+                </div>
+                <table class="table table-advance dataTable" id="example">
+                    <thead class="table-head">
+                        <tr>
+                            <th>Id</th>
+                            <th>Username</th>
+                            <th>Grade</th>
+                            <th>Email</th>
+                            <th>Father Name</th>
+                            <th class="actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.UserName</td>
+                                <td>@item.Grade</td>
+                                <td>@item.Email</td>
+                                <td>@item.FatherName</td>
+                                <td class="actions sorting_asc_disabled sorting_desc_disabled">
+                                    <a class="btn btn-success glyphicon glyphicon-ok-circle" href=@("/Admin/ViewStudentDetails/" + item.Id)></a>
+                                    <a class="btn btn-info glyphicon glyphicon glyphicon-pencil bcc" style="width:40px;" href=@("/Admin/EditStudent/"+item.Id)></a>
+                                    <a class="btn btn-danger glyphicon glyphicon glyphicon-trash" rel="nofollow" data-method="delete" href=@("/Admin/DeleteStudent/"+item.Id)></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "ShowStudentToGrantLeave";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model SchoolManagementSystem.Models.Student
+
+<div class="box">
+    <div class="box-title">
+        <h1> Grant Leave to Student</h1>
+    </div>
+    <div class="box-content">
+        <form action="GrantStudentLeave" method="post">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Student Name</label>
+                    <div class="controls">
+                        <input type="text" name="UserName" value="@(Model.UserName)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>Mobile Number</label>
+                    <div class="controls">
+                        <input type="text" name="MobileNumber" value="@(Model.MobileNumber)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>Father Name</label>
+                    <div class="controls">
+                        <input type="text" name="FatherName" value="@(Model.FatherName)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>Grade</label>
+                    <div class="controls">
+                        <input type="text" name="Grade" value="@(Model.Grade)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>Class</label>
+                    <div class="controls">
+                        <input type="text" name="ClassName" value="@(Model.Class)" readonly />
+                    </div>
+                </div>
+            </div>
+            @*<input type="hidden" value="@(Model.ClassId)" />*@
+            <input type="hidden" name="StudentId" value="@(Model.Id)" />
+            <input type="hidden" name="ClassId" value="@(ViewBag.ClassId)" />
+            <br />
+
+            <div class="box">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Leave Start From</label>
+                            <div class="controls">
+                                <input type="text" class="date-picker" name="LeaveStart" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Leave End At</label>
+                            <div class="controls">
+                                <input type="text" class="date-picker" name="LeaveEnd" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Reason to Grant Leave</label>
+                            <div class="controls">
+                                <input class="input-block-level" name="Reason" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Briefly Describe Reason to Grant Leave</label>
+                            <div class="controls">
+                                <textarea rows="8" class="input-xxlarge" name="Discription" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 pull-right">
+                    <input type="submit"  class="btn btn-primary" value="Get Leave" />   
+                </div> 
+            </div>
+        </form>
+    </div>
+
+</div>
+

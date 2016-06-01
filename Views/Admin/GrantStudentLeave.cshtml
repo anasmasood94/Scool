@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "GrantStudentLeave";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model SchoolManagementSystem.Models.Student
+
+<div class="box">
+    <div class="box-title">
+        <h1> Grant Student Leave</h1>
+    </div>
+    <div class="box-content">
+        <form action="SearchStudentForLeave" method="post">
+            <input type="number" placeholder="Enter Student Id" name="Id" />
+            <input type="text" placeholder="Enter Student Name" name="UserName" />
+            <input type="text" placeholder="Enter Student Mobile Number" name="MobileNumber" />
+            <input type="text" placeholder="Enter Student Father Name" name="FatherName" />
+            <input type="text" placeholder="Enter Student Grade Name" name="Grade" />
+            <input type="text" placeholder="Enter Student Class Name" name="Class" />
+            <input type="submit" class="btn btn-primary" value="Get Student" />
+        </form>
+    </div>
+</div>
+

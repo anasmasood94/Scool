@@ -1,0 +1,251 @@
+﻿@model SchoolManagementSystem.Models.GradeTeachStud
+@{
+    ViewBag.Title = "Notifications";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section PageTitle{
+    <div class="page-title">
+        <div>
+            <h1>Notifications</h1>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <link href="~/Content/assets/chosen-bootstrap/chosen.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" rel="stylesheet" />
+    <script src="~/Scripts/Custom/notificationsScript1.js"></script>
+    <script src="~/Content/assets/chosen-bootstrap/chosen.jquery.min.js"></script>
+    <script src="~/Content/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>  
+    <script src="~/Content/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+}
+
+<div class="row-fluid">
+    <div class="span12">
+
+        <form action="Notifications" method="post">
+            <div class="row-fluid">
+                <div class="span12 box">
+                    <div class="box-title">
+                        <h3>Send Email or SMS</h3>
+                    </div>
+                    <div class="box-content">
+                        <div class="row-fluid">
+                            <div class="checkbox">
+                                <div class="span2">
+                                    <input type="checkbox" name="email" id="email" value="Email" class="leave_checkbox" checked="checked"><strong>Email</strong>
+                                </div>
+                                <div class="span2">
+                                    <input type="checkbox" name="sms" id="sms" value="SMS" class="leave_checkbox"><strong>SMS</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row-fluid ">
+                            <div class="span10">
+                                <h2 class="h2">Message Body</h2>
+                                <div class="btn-toolbar">
+                                    <div class="btn-group">
+                                        <label>Student Info </label>
+                                        <a id="stdName" class="btn btn-primary fa fa-font show-tooltip" data-value="{{student.fullname}}" title="Student Name"></a>
+                                        <a id="stdRoll" class="btn btn-primary fa fa-list-ol show-tooltip" data-value="{{student.rollnumber}}" title="RollNumber"></a>
+                                        <a id="stdLogin" class="btn btn-primary fa fa-user show-tooltip" data-value="{{student.login_info}}" title="Login Info"></a>
+
+                                    </div>
+                                    <div class="btn-group">
+                                        <label>Teacher Info </label>
+                                        <a id="teachName" class="btn btn-primary fa fa-font show-tooltip" data-value="{{teacher.fullname}}" title="Teacher Name"></a>
+                                        <a id="teachId" class="btn btn-primary fa fa-list-ol show-tooltip" data-value="{{teacher.rollnumber}}" title="Teacher Id"></a>
+                                        <a id="teachLogin" class="btn btn-primary fa fa-user show-tooltip" data-value="{{teacher.login_info}}" title="Login Info"></a>
+
+                                    </div>
+                                    <div class="btn-group">
+                                        <label>Parent Info </label>
+                                        <a id="pName" class="btn btn-primary fa fa-font show-tooltip" data-value="{{parent.Name}}" title="Father Name"></a>
+                                        <a id="pEmail" class="btn btn-primary fa fa-envelope-o show-tooltip" data-value="{{parent.email}}" title="Email"></a>
+                                        <a id="pMobile" class="btn btn-primary fa fa-phone show-tooltip" data-value="{{parent.mobile}}" title="Mobile"></a>
+                                        
+                                        <a id="pmName" class="btn btn-primary fa fa-font show-tooltip" data-value="{{parent.mother.name}}" title="Mother Name"></a>
+                                        <a id="pLogin" class="btn btn-primary fa fa-user show-tooltip" data-value="{{parent.login_info}}" title="Login Info" ></a>
+
+                                    </div>
+                                </div>
+                                <textarea autofocus rows="4" class="input-block-level" name="message" id="msg_body"></textarea>
+                                    @*<div class="controls">
+                                        <textarea class="span12 wysihtml5" rows="6" name="message" id="msg_body"></textarea>
+                                    </div>*@                                 
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row-fluid">
+                            <div class="span2">
+                                <h2>Sent To: </h2>
+                            </div>
+                            <div class="span3 container">
+                                <div class="checkbox">
+                                    <label class="i-checks">
+                                        <input type="checkbox" name="all_students" id="all_students" class="leave_checkbox"><strong>All Students</strong>
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label class="i-checks">
+                                        <input type="checkbox" name="all_employees" id="all_employees" class="leave_checkbox">
+                                        <strong>All Employees</strong>
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label class="i-checks">
+                                        <input type="checkbox" name="all_parents" id="all_parents" class="leave_checkbox">
+                                        <strong>All Parents</strong>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="span6">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <div class="checkbox">
+                                            <label class="i-checks">
+                                                <input type="checkbox" name="parent" id="ch_parent" class="leave_checkbox parent">
+                                                <strong>Parents</strong>
+                                            </label>
+                                        </div>
+                                        <div class="span6">
+                                            <div id="d_parents">
+                                                <select name="parents" id="parents" class="chosen" multiple="multiple">
+                                                    @{
+                                                    foreach (var x in Model.student)
+                                                    {
+                                                    <option value="@x.Id">@(x.Id + "  ")</option>
+                                                    }
+                                                    }
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="parent-show" style="padding-left: 0; display: none;">
+                                    </div>
+
+                                    <div class="checkbox">
+                                        <label class="i-checks">
+                                            <input type="checkbox" name="staff" id="ch_staff" class="leave_checkbox staff">
+                                            <strong>Staff Members</strong>
+                                        </label>
+                                        <div id="d_emp">
+                                            <select name="emp" class="chosen span6" multiple="multiple">
+                                                @{
+                                                    if (Model != null)
+                                                    {
+                                                        foreach (var x in Model.employee)
+                                                        {
+                                                            <option value="@x.Id">@(x.Id + "  ")</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                
+                                <div class="staff-show" style="padding-left: 0; display: none;">
+                                </div>
+
+                                <div class="checkbox">
+                                    <label class="i-checks">
+                                        <input type="checkbox" name="grade" id="ch_grade" class="leave_checkbox grade">
+                                        <strong>Grades</strong>
+                                    </label>
+                                    <div id="d_grades">
+                                        <select name="grades" id="grades" class="chosen" multiple="multiple">
+                                            @{
+                                                foreach (var x in Model.grade)
+                                                {
+                                                    <option value="@x.Id">@(x.Id + "  ")</option>
+                                                }
+                                            }
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="grade-show" style="padding-left: 0; display: none;">
+                                </div>
+
+                                <div class="checkbox">
+                                    <label class="i-checks">
+                                        <input type="checkbox" name="student" id="ch_student" class="leave_checkbox student">
+                                        <strong>Students</strong>
+                                    </label>
+                                    <div id="d_students">
+                                        <select name="students" id="students" class="chosen" multiple="multiple">
+                                            @{
+                                                foreach (var x in Model.student)
+                                                {
+                                                    <option value="@x.Id">@(x.Id + "  ")</option>
+                                                }
+                                            }
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row-fluid">
+                                <div class="span3 pull-right">
+                                    <input type="submit" name="commit" value="Send" class="btn btn-success  btn-block">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="span3 box">
+                    <div class="box-title">
+                        <h3>Controls</h3>
+                    </div>
+                    <div class="box-content">
+                        <h3>Student Info</h3>
+                        <a id="stdName" class="btn btn-primary fa fa-font show-tooltip" data-value="{{student.fullname}}" title="Student Name"></a>
+                        <a id="stdRoll" class="btn btn-primary fa fa-list-ol show-tooltip" data-value="{{student.rollnumber}}" title="RollNumber"></a>
+                        <a id="stdLogin" class="btn btn-primary fa fa-user show-tooltip" data-value="{{student.login_info}}" title="Login Info"></a>
+
+                        <h3>Teacher Info</h3>
+
+                        <a id="teachName" class="btn btn-primary fa fa-font show-tooltip" data-value="{{teacher.fullname}}" title="Teacher Name"></a>
+                        <a id="teachId" class="btn btn-primary fa fa-list-ol show-tooltip" data-value="{{teacher.rollnumber}}" title="Teacher Id"></a>
+                        <a id="teachLogin" class="btn btn-primary fa fa-user show-tooltip" data-value="{{teacher.login_info}}" title="Login Info"></a>
+
+                        <h3>Parents Info</h3>
+
+                        <a id="pName" class="btn btn-primary fa fa-font show-tooltip" data-value="{{parent.Name}}" title="Father Name"></a>
+                        <a id="pEmail" class="btn btn-primary fa fa-envelope-o show-tooltip" data-value="{{parent.email}}" title="Email"></a>
+                        <a id="pMobile" class="btn btn-primary fa fa-slack show-tooltip" data-value="{{parent.mobile}}" title="Mobile"></a>
+                        <br />
+                        <a id="pmName" class="btn btn-primary fa fa-font show-tooltip" data-value="{{parent.mother.name}}" title="Mother Name"></a>
+                        <a id="pLogin" class="btn btn-primary fa fa-user show-tooltip" data-value="{{parent.login_info}}" title="Login Info" style="margin-top:2px"></a>
+
+
+                        @*<input id="stdName" type="button" class="btn btn-primary btn-block" data-value="{{student.fullname}}" value="Name" />
+                            <input id="stdRoll" type="button" class="btn btn-primary btn-block" data-value="{{student.rollnumber}}" value="Rollnumber" />
+                            <input id="stdLogin" type="button" class="btn btn-primary btn-block" data-value="{{student.login_info}}" value="Login Info">
+
+                            <h3>Teacher Info</h3>
+                            <input id="teachName" type="button" class="btn btn-primary" data-value="{{teacher.fullname}}" value="Name" />
+                            <input id="teachId" type="button" class="btn btn-primary" data-value="{{teacher.rollnumber}}" value="Emp Number" />
+                            <input id="teachLogin" type="button" class="btn btn-primary" data-value="{{teacher.login_info}}" value="Login Info">
+
+                            <h3>Parents Info</h3>
+                            <input id="pName" type="button" class="btn btn-primary" data-value="{{parent.Name}}" value="Name" />
+                            <input id="pEmail" type="button" class="btn btn-primary" data-value="{{parent.email}}" value="Email" />
+                            <input id="pMobile" type="button" class="btn btn-primary" data-value="{{parent.mobile}}" value="Mobile" />
+                            <input id="pmName" type="button" class="btn btn-primary" data-value="{{parent.mother.name}}" value="Mother Name" />
+                            <input id="pLogin" type="button" class="btn btn-primary" data-value="{{parent.login_info}}" value="Login Info" />
+                    </div>
+                </div>*@
+            </div>
+        </form>
+    </div>
+</div>
+

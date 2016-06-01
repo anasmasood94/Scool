@@ -1,0 +1,102 @@
+﻿@model SchoolManagementSystem.Models.Employee
+@{
+    ViewBag.Title = "CreateUser";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $('#btnSubmit').click(function (event) {
+            var pass = $('#Password').val();
+            var conf = $('#ConfirmPassword').val();
+            if(pass!=conf)
+            {
+                $('#PasswordError').show();
+                event.preventDefault();
+            }
+        });
+        $('#ConfirmPassword').focusout(function (event) {
+            var pass = $('#Password').val();
+            var conf = $('#ConfirmPassword').val();
+            if (pass != conf) {
+                $('#PasswordError').show();
+                event.preventDefault();
+            }
+        });
+        $('#ConfirmPassword').focusin(function () {
+            $('#PasswordError').hide();
+        });
+    });
+</script>
+<div class="page-title">
+    <div>
+        <h2>Create User</h2>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="box">
+                <div class="box-title">
+                    <h3><i class="icon-reorder"></i>Create User</h3>
+                </div>
+                <div class="box-content">
+                    <form class="form-horizontal" action="#" method="post">
+                        <div id="form-wizard-1" class="form-wizard">
+                            <div class="tab-content">
+                                <div id="tab1-2" class="tab-pane">
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Full Name</label>
+                                    <div class="controls">
+                                        <input type="text" class="span5" name="FullName" id="FullName" required>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Email</label>
+                                    <div class="controls">
+                                        <input type="email" class="span5" name="Email" id="Email" required>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Role</label>
+                                    <div class="controls">
+                                        <select tabindex="1" class="input-xlarge span5" name="Category" id="Category">
+                                            <option value="1">Admin</option>
+                                            <option value="3">Superuser</option>
+                                            <option value="4">Acadmic</option>
+                                            @*<option value="5">Student</option>
+                                            <option value="6">Student</option>
+                                            <option value="7">Financial Affairs</option>
+                                            <option value="8">General Administration</option>
+                                            <option value="9">Academic Affairs1</option>
+                                            <option value="10">Academic Affairs2</option>
+                                            <option value="11">TEST ROLE</option>
+                                            <option value="12">ahmad</option>
+                                            <option value="13">asst controller</option>*@
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Password</label>
+                                    <div class="controls">
+                                        <input type="password" class="span5" name="Password" id="Password" required>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Confirm Password</label>
+                                    <div class="controls">
+                                        <input type="password" class="span5" id="ConfirmPassword" required>
+                                        <label style="color:red;font-size:x-small;font-family:'Book Antiqua'" id="PasswordError" hidden>Error password does not match</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="actions pull-right">
+                                    <input id="btnSubmit" type="submit" name="add" value="Create User" class="btn btn-success">
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

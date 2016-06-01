@@ -1,0 +1,58 @@
+﻿@model SchoolManagementSystem.Models.Subject
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script>
+    $(document).ready(function () {
+       
+        $(Back).click(function () {
+            window.location.href = "/Admin/ListAllSubjects";
+        });
+    });
+</script>
+@section PageTitle{
+<div class="page-title">
+    <div>
+        <h1>Editing Subject </h1>
+    </div>
+</div>
+    }
+<div class="row-fluid">
+    <div class="span12">
+        <div class="box">
+            <div class="box-title">
+                <h3>Edit</h3>
+            </div>
+            <div class="box-content">
+                <form action="EditSubject" method="post">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <label for="subject_name">Name</label><br>
+                            <div class="controls">
+                                <input style="height:34px;" class="form-control" required="required" autofocus="autofocus" type="text" name="Name" id="subject_name" value=@Model.Name>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <label for="subject_code">Code</label><br>
+                            <div class="controls">
+                                <input style="height:34px;" class="form-control" required="required" autofocus="autofocus" type="text" name="Code" id="subject_code" value=@Model.Code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="controls span2 pull-right">
+                            <input id="Save" type="submit" name="Save" value="Save" class=" btn btn-block btn-success" >
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row-fluid">
+    <div class="span2">
+        <input id="Back" type="button" name="Back" value="back" class="btn btn-block btn-success">
+    </div>
+</div>

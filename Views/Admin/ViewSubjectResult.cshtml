@@ -1,0 +1,248 @@
+﻿@model List<SchoolManagementSystem.Models.ClassGradeBatchViewModel>
+@{
+    ViewBag.Title = "ViewSubjectResult";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $('#SelectClass').on('change', function () {
+            $('#GroupNeeded').hide();
+
+
+            var h = $('#GroupNeeded').height();
+            var w = $('#GroupNeeded').width();
+            $('#spiner').height(h);
+            $('#spiner').width(w);
+            $('#spiner').show();
+
+            var b = $(this);
+            var a = $(this).val();
+            var subject = $('#SelectSubject');
+            var exam = $('#SelectQuarter');
+            subject.empty();
+            exam.empty();
+
+            $.ajax({
+                url: "/Admin/GetSubjectList/?ClassId=" + a,
+                dataType: 'json',
+                type: 'GET',
+                error: function () {
+                    alert("unalbe to fetch data of subjects");
+                },
+                success: function (d) {
+                    var secondDdl = $('#SelectSubject');
+                    $.each(d, function () {
+                        $('<option>', {
+                            value: this.Value
+                        }).html(this.Text).appendTo(secondDdl);
+                    });
+                },
+
+
+            });
+
+
+            $.ajax({
+                url: "/Admin/GetExamList/?ClassId=" + a,
+                dataType: 'json',
+                type: 'GET',
+                error: function () {
+                    alert("unalbe to fetch data of Quarters");
+                },
+                success: function (result) {
+                    var second = $('#SelectQuarter');
+                    $.each(result, function () {
+                        $('<option>', {
+                            value: this.Value
+                        }).html(this.Text).appendTo(second);
+                    });
+                },
+            });
+            var i = 0;
+            while (i < 20000)
+                i++;
+            $('#GroupNeeded').show();
+            $('#spiner').hide();
+        });
+
+        $('#GetMarks').click(function () {
+            var subj = $('#SelectSubject').val();
+            var exam = $('#SelectQuarter').val();
+            var ClassId = $('#SelectClass').val();
+
+            $('#spinerTable').height($('#MarksThings').height());
+            $('#spinerTable').width($('#MarksThings').width());
+
+            $('#MarksThings').show();
+            $('#spinerTable').show();
+            $.ajax({
+                url: "/Admin/GetStudentMarksBySE/?ClassId=" + ClassId + "&SubjectId=" + subj + "&ExamId=" + exam,
+                dataType: 'json',
+                type: 'GET',
+                error: function () { alert("Unable to get Marks.") },
+                success: function (result) {
+                    $('#TableHeading').empty();
+                    $('#TableBody').empty();
+
+                    var subject = $('#SelectSubject option:selected').text();
+                    var exam = $('#SelectQuarter option:selected').text();
+                    $('#MarksThingsTitle').text(exam + '    -    ' + subject);
+
+                    if (result.stdList[0].marks.length > 0) {
+                        var h = '<tr><th>Name</th>';
+                        var i = 0;
+                        while (i < result.MarksName.length) {
+                            h += '<th>' + result.MarksName[i] + '</th>';
+                            i++;
+                        }
+                        h += '<th>Total</th></tr>';
+                        $('#TableHeading').append(h);
+
+                        var b = '';
+                        i = 0;
+                        var j = 0;
+
+                        while (i < result.stdList.length) {
+                            j = 0;
+                            var total = 0;
+                            b += '<tr><td>' + result.stdList[i].StudentName + '</td>';
+                            while (j < result.stdList[i].marks.length) {
+                                b += '<td>' + result.stdList[i].marks[j] + '</td>';
+                                total += result.stdList[i].marks[j];
+                                j++;
+                            }
+                            b += '<td>' + total + '</td>';
+                            b += '</tr>';
+                            i++;
+                        }
+
+                        $('#TableBody').append(b);
+                        $('#spinerTable').hide();
+                    }
+                }
+            });
+
+        });
+    });
+</script>
+@{
+    List<SchoolManagementSystem.Models.Subject> subjectList = ViewBag.subjectList;
+    List<SchoolManagementSystem.Models.Exam> examList = ViewBag.examList;
+}
+<style>
+    .rec_loading.rec_spinner {
+        display: block;
+    }
+
+    .rec_spinner {
+        background: #fff url(/Spinner.gif) no-repeat center center;
+        display: none;
+        filter: alpha(opacity=50);
+        opacity: 0.5;
+        position: absolute;
+        z-index: 4;
+        /*background: green;*/
+        height: 100%;
+        width: 50%;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+</style>
+@section PageTitle{
+    <div class="page-title">
+        <h2>Subject Result</h2>
+}
+
+<div class="box">
+    <div class="box-title">
+        <h3>Select Class</h3>
+    </div>
+    <div class="box-content">
+        <div class="row">
+            <div class="container col-md-3 col-md-offset-1">
+                <label>Select Class</label>
+                <div class="controls">
+                    <select id="SelectClass">
+                        @{
+                            if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <option value="@item.ClassId">@(item.GradeName + " (" + item.ClassName + ")")</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div id="dvLoading">
+
+        </div>
+
+        <div class="row" id="GroupNeeded">
+            <div class="rec_spinner rec_loading" id="spiner" hidden>
+            </div>
+            <br />
+            <div class="col-md-3 col-md-offset-1">
+                <label>Select Subject</label>
+                <div class="controls">
+                    <select id="SelectSubject">
+                        @{
+                            if (subjectList != null)
+                            {
+                                foreach (var item in subjectList)
+                                {
+                                    <option value="@item.Id" >@item.Name</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Select Quarter</label>
+                <div class="controls">
+                    <select id="SelectQuarter">
+                        @{
+                            if (examList != null)
+                            {
+                                foreach (var item in examList)
+                                {
+                                    <option value="@item.Id" >@item.Name</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label></label>
+                <div class="controls">
+                    <button class="btn btn-success" id="GetMarks" type="button">See Marks</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box" id="MarksThings" hidden>
+    <div class="box-title">
+        <h3 id="MarksThingsTitle"></h3>
+    </div>
+    <div class="box-content" style="overflow: hidden;position: relative;width: 100%;">
+        <br />
+        <div class="rec_spinner rec_loading" id="spinerTable" style="">
+        </div>
+        <label id="TableSubject"></label>
+        <table class="table table-advance" id="example" style="height:inherit">
+            <thead class="table-head" id="TableHeading">
+
+            </thead>
+            <tbody id="TableBody"></tbody>
+        </table>
+
+    </div>
+</div>
+</div>

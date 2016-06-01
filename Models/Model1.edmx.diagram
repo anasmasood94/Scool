@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2a30e4d81bc640e2aa3bfee0aa281396" Name="Diagram1" ZoomLevel="46">
+        <EntityTypeShape EntityType="Database1Model.Batch" Width="1.5" PointX="0.75" PointY="26" />
+        <EntityTypeShape EntityType="Database1Model.Bus" Width="1.5" PointX="8.25" PointY="59.625" />
+        <EntityTypeShape EntityType="Database1Model.BusStudent" Width="1.5" PointX="10.5" PointY="46" />
+        <EntityTypeShape EntityType="Database1Model.Class" Width="1.5" PointX="3" PointY="39" />
+        <EntityTypeShape EntityType="Database1Model.ClassSubjectTeacher" Width="1.5" PointX="5.25" PointY="36.625" />
+        <EntityTypeShape EntityType="Database1Model.Employee" Width="1.5" PointX="3" PointY="31.625" />
+        <EntityTypeShape EntityType="Database1Model.EmployeeAttendence" Width="1.5" PointX="5.25" PointY="5.5" />
+        <EntityTypeShape EntityType="Database1Model.EmployeeLeave" Width="1.5" PointX="5.25" PointY="9" />
+        <EntityTypeShape EntityType="Database1Model.Exam" Width="1.5" PointX="3" PointY="25.25" />
+        <EntityTypeShape EntityType="Database1Model.ExamGroupSubject" Width="1.5" PointX="5.25" PointY="23.875" />
+        <EntityTypeShape EntityType="Database1Model.ExamPublsih" Width="1.5" PointX="5.25" PointY="32.625" />
+        <EntityTypeShape EntityType="Database1Model.Grade" Width="1.5" PointX="0.75" PointY="21.5" />
+        <EntityTypeShape EntityType="Database1Model.GradeFee" Width="1.5" PointX="5.25" PointY="63.125" />
+        <EntityTypeShape EntityType="Database1Model.GradeSubject" Width="1.5" PointX="7.5" PointY="27.75" />
+        <EntityTypeShape EntityType="Database1Model.GroupSubject" Width="1.5" PointX="7.5" PointY="23.625" />
+        <EntityTypeShape EntityType="Database1Model.Heading" Width="1.5" PointX="5.25" PointY="12.75" />
+        <EntityTypeShape EntityType="Database1Model.InventoryCategory" Width="1.5" PointX="6" PointY="56.125" />
+        <EntityTypeShape EntityType="Database1Model.InventoryItem" Width="1.5" PointX="8.25" PointY="55.375" />
+        <EntityTypeShape EntityType="Database1Model.InventoryOrder" Width="1.5" PointX="10.5" PointY="41.75" />
+        <EntityTypeShape EntityType="Database1Model.InventoryPackage" Width="1.5" PointX="8.25" PointY="36.875" />
+        <EntityTypeShape EntityType="Database1Model.MarksFormat" Width="1.5" PointX="5.25" PointY="20.5" />
+        <EntityTypeShape EntityType="Database1Model.Route" Width="1.5" PointX="6" PointY="60.25" />
+        <EntityTypeShape EntityType="Database1Model.Student" Width="1.5" PointX="5.25" PointY="40.5" />
+        <EntityTypeShape EntityType="Database1Model.StudentAttendence" Width="1.5" PointX="7.5" PointY="41.25" />
+        <EntityTypeShape EntityType="Database1Model.StudentGradeFee" Width="1.5" PointX="7.5" PointY="48.75" />
+        <EntityTypeShape EntityType="Database1Model.StudentInvoice" Width="1.5" PointX="7.5" PointY="69.25" />
+        <EntityTypeShape EntityType="Database1Model.StudentLeave" Width="1.5" PointX="7.5" PointY="44.875" />
+        <EntityTypeShape EntityType="Database1Model.StudentMark" Width="1.5" PointX="10.5" PointY="49.875" />
+        <EntityTypeShape EntityType="Database1Model.StudentSpecificFee" Width="1.5" PointX="7.5" PointY="65.75" />
+        <EntityTypeShape EntityType="Database1Model.Subject" Width="1.5" PointX="5.25" PointY="27.75" />
+        <AssociationConnector Association="Database1Model.FK_Class_ToBatch" />
+        <AssociationConnector Association="Database1Model.FK_Exam_Batch" />
+        <AssociationConnector Association="Database1Model.FK_ExamPublsih_Batch" />
+        <AssociationConnector Association="Database1Model.FK_Buses_ToGrades" />
+        <AssociationConnector Association="Database1Model.FK_Buses_ToTable" />
+        <AssociationConnector Association="Database1Model.FK_StudentBus_ToTable_1" />
+        <AssociationConnector Association="Database1Model.FK_StudentBus_ToStudent" />
+        <AssociationConnector Association="Database1Model.FK_ExamPublsih_CLass" />
+        <AssociationConnector Association="Database1Model.FK_Student_CLass" />
+        <AssociationConnector Association="Database1Model.FK_StudentAttendence_ToClass" />
+        <AssociationConnector Association="Database1Model.FK_StudentLeaves_ToClassId" />
+        <AssociationConnector Association="Database1Model.FK_StudentMarks_Class" />
+        <AssociationConnector Association="Database1Model.FK_Table_ToClass2" />
+        <AssociationConnector Association="Database1Model.FK_Table_ToEmployee" />
+        <AssociationConnector Association="Database1Model.FK_Table_ToSubject" />
+        <AssociationConnector Association="Database1Model.FK_StudentAttendence_ToEmployee" />
+        <AssociationConnector Association="Database1Model.FK_StudentLeaves_ToEmployees" />
+        <AssociationConnector Association="Database1Model.FK_Exam_Grade" />
+        <AssociationConnector Association="Database1Model.FK_ExamGroupSubject_Exams" />
+        <AssociationConnector Association="Database1Model.FK_ExamPublsih_Exam" />
+        <AssociationConnector Association="Database1Model.FK_Headings_Exam" />
+        <AssociationConnector Association="Database1Model.FK_MarksFormat_Exam" />
+        <AssociationConnector Association="Database1Model.FK_GroupSubject_ExamGroupSubject" />
+        <AssociationConnector Association="Database1Model.FK_GradeFee_ToGrade" />
+        <AssociationConnector Association="Database1Model.FK_GradeSubject_ToGrade" />
+        <AssociationConnector Association="Database1Model.FK_InventoryItems_ToGrades" />
+        <AssociationConnector Association="Database1Model.FK_InventoryPackages_ToGrade" />
+        <AssociationConnector Association="Database1Model.FK_StudentGradeFee_ToGradeFee" />
+        <AssociationConnector Association="Database1Model.FK_GradeSubject_ToSubject" />
+        <AssociationConnector Association="Database1Model.FK_GroupSubject_Subject" />
+        <AssociationConnector Association="Database1Model.FK_InventoryItems_ToInventoryCategories" />
+        <AssociationConnector Association="Database1Model.FK_InventoryOrders_ToInventoryItems" />
+        <AssociationConnector Association="Database1Model.FK_InventoryOrders_ToInventoryPackages" />
+        <AssociationConnector Association="Database1Model.FK_InventoryOrders_ToStudent" />
+        <AssociationConnector Association="Database1Model.FK_StudentMarks_MarksFormat" />
+        <AssociationConnector Association="Database1Model.FK_StudentAttendence_ToStudent" />
+        <AssociationConnector Association="Database1Model.FK_StudentGradeFee_ToStudent" />
+        <AssociationConnector Association="Database1Model.FK_StudentInvoices_ToStudent" />
+        <AssociationConnector Association="Database1Model.FK_StudentLeaves_ToStudents" />
+        <AssociationConnector Association="Database1Model.FK_StudentMarks_Student" />
+        <AssociationConnector Association="Database1Model.FK_StudentSpecificFee_ToStudent" />
+        <AssociationConnector Association="Database1Model.FK_StudentMarks_Subject" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

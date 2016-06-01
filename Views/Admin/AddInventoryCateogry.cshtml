@@ -1,0 +1,27 @@
+﻿@model SchoolManagementSystem.Models.InventoryCategory
+@{
+    ViewBag.Title = "AddInventoryCateogry";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section PageTitle{
+    <div class="page-title">
+        <h1>Add Invetroy Category</h1>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>Invetory Category Information</h3>
+    </div>
+    <div class="box-content">
+        <label>Enter Category Name</label>
+        <form action="/Admin/AddInventoryCateogry" method="post">
+            <input type="text" name="CategoryName" class="input" />
+
+            <div class="form-actions">
+                <input type="submit" value="Add Category" class="btn btn-success pull-right" />
+            </div>
+        </form>
+    </div>
+</div>
+

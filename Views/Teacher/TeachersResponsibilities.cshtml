@@ -1,0 +1,25 @@
+﻿@model List<SchoolManagementSystem.Models.TeacherSubjectViewModel>
+@{
+    ViewBag.Title = "TeachersResponsibilities";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+
+<div class="row-fluid">
+    <table class="table table-responsive">
+        <tr>
+            <th>Subjects</th>
+            <th>Grade</th>
+            <th>Actions</th>
+        </tr>
+        @foreach(var obj in Model)
+        {
+            <tr>
+                <th>@obj.Subject</th>
+                <th>@obj.Grade</th>
+                <th>
+                    <a href=@("/Teacher/ViewStudentsInClass/" + obj.ClassId) >View Students</a>
+                </th>
+            </tr>
+        }
+    </table>
+</div>

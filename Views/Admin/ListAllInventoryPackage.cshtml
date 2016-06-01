@@ -1,0 +1,64 @@
+﻿@model List<SchoolManagementSystem.Models.InventoryPackageViewModel>
+@{
+    ViewBag.Title = "ListAllInventoryPackage";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Scripts{
+    <link href="~/Content/DataTables/datatables.min.css" rel="stylesheet" />
+    <script src="~/Content/DataTables/datatables.min.js"></script>
+}
+@section PageTitle{
+    <div class="page-title">
+        <h1>Inventory Packages</h1>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>List of Inventroy Packages</h3>
+    </div>
+    <div class="box-content">
+        <table class="table table-advance" id="example" style="height:inherit">
+            <thead class="table-head">
+                <tr>
+                    <th>Package Name</th>
+                    <th>Grade Name</th>
+                    <th>Items in Package</th>
+                    <th>Package Price</th>
+                    <th>Total Price</th>
+                    <th class="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; Model != null && i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>@(Model[i].PackageName)</td>
+                        <td>@Model[i].GradeName</td>
+                        <td>@(Model[i].ItemsNames)</td>
+                        <td>@Model[i].PackagePrice</td>
+                        <td>@Model[i].TotalPrice</td>
+
+                        <td class="actions">
+                            <a class="btn btn-info" href=@("/Admin/ViewInventoryItemsInPackage/" + Model[i].Id)>View Items in Package</a>
+                            @if (Model[i].CanOrder)
+                            {
+                                <a class="btn btn-info" href=@("/Admin/OrderInventoryPackage/" + Model[i].Id)>Order Package</a>
+
+                            }
+                            else
+                            {
+                                <a class="btn btn-info disabled " onclick="alert()" href=@("/Admin/OrderInventoryPackage/" + Model[i].Id)>Order Package</a>
+
+                            }
+
+                            <a class="btn btn-info  glyphicon glyphicon glyphicon-pencil bcc" href=@("/Admin/EditInventoryPackage/"+Model[i].Id)></a>
+                            <a data-confirm="Are you sure?" class="btn btn-danger glyphicon glyphicon glyphicon-trash" rel="nofollow" data-method="delete" href=@("/Admin/DeleteInventoryPackage/" + Model[i].Id)></a>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

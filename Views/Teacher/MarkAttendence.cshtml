@@ -1,0 +1,187 @@
+﻿@model List<SchoolManagementSystem.Models.AttendenceViewModel>
+@{
+    ViewBag.Title = "MarkAttendence";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+@section PageTitle{
+    <div class="page-title">
+        <h1><a></a>Mark Sudent Attendance</h1>
+    </div>
+}
+<script>
+
+
+    $(document).ready(function () {
+        var count = 0;
+        $('#attendenceT thead th').each(function (i, v) {
+            var title = $(this).text();
+            var clas = $(this).attr('class');
+            if (clas == "Drop-Down") {
+                var h = '';
+                h += '<div class="btn-group" >';
+                h += '<a data-toggle="dropdown" class="btn btn-to-grey btn-circle dropdown-toggle"><span class="caret"></span></a>';
+                h += '<ul class="dropdown-menu">';
+                h += '<li><a href="" id="CheckAll' + count + '"><i class="fa fa-check-square-o"></i> Select All</a></li>';
+                h += '<li><a href="" id="CheckNone' + count + '"><i class="fa fa-square-o"></i> Select None</a></li>';
+                h += '</ul>';
+                h += '</div>';
+                $(this).append(h);
+                count++;
+            }
+            $('#CheckAll0').click(CheckAll0);
+            $('#CheckNone0').click(CheckNone0);
+            $('#CheckAll1').click(CheckAll1);
+            $('#CheckNone1').click(CheckNone1);
+        });
+
+        $('.checked-Prasent').click(function () {
+
+            $(this).parents('.nested-parent').find('.checked-Late').prop('checked', false);
+        });
+
+
+        function CheckAll0(event) {
+            $('.check-Prasent .checkbox').each(function () {
+                $(this).prop('checked', true);
+                $(this).parents('.nested-parent').find('.check-Late').prop('checked', false);
+            });
+            event.preventDefault();
+        }
+        function CheckNone0(event) {
+            $('.check-Prasent .checkbox').each(function () {
+                $(this).prop('checked', false);
+            });
+            event.preventDefault();
+        }
+
+        function CheckAll1(event) {
+            $('.check-Late .checkbox').each(function () {
+                debugger
+                $(this).prop('checked', true);
+                $(this).parents('.nested-parent').find('.check-Prasent').attr('checked',false);
+            });
+            event.preventDefault();
+        }
+        function CheckNone1(event) {
+            $('.check-Late .checkbox').each(function () {
+                $(this).prop('checked', false);
+            });
+            event.preventDefault();
+        }
+
+        $('#print').on('click', function () {
+            reverse();
+            jQuery("#example").print({
+                noPrintSelector: ".actions",
+                // Add this on top
+                //append: "My Footer<br/>",
+                // Add this at bottom
+                //prepend: "<br/>jQueryScript.net",
+                title: "Al Omam International School"
+            });
+            reverseBack();
+
+        });
+        function reverseBack() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).text();
+                if (title != "Actions") {
+                    $(this).html(
+                    '<input type="text"  class="form-control" style="height:auto" id="exampleInputName2" placeholder="' + title + ' search">'
+                    );
+                }
+            });
+        }
+        function reverse() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).html();
+                var input = $('#exampleInputName2').attr('placeholder');
+                if (input != null) {
+                    var input = input.replace('search', '');
+                }
+                //            debugger
+                if (title != "Actions") {
+                    $(this).html(input);
+                }
+            });
+        }
+
+    });
+
+</script>
+
+<div class="box">
+    <div class="box-title">
+        <h3>Attendance</h3>
+    </div>
+    <div class="box-content">
+        <form method="post" action="MarkAttendence">
+            <div class="row-fluid">
+                <div class="span12">
+                    @{int i = 0;}
+                    <input type="hidden" name="ClassId" value="@(ViewBag.ClassId)" />
+                    <input type="hidden" name="Date" value="@(ViewBag.Date)" />
+                    <div class="clearfix" style="margin-top:10px"></div>
+                    <table class="table table-advance" id="attendenceT" >
+                        <thead class="table-head">
+                            <tr>
+                                <th>StudentName</th>
+                                <th class="Drop-Down">Present/Absent</th>
+                                <th class="Drop-Down">Late</th>
+                                <th>Leave</th>
+                                <th>Leave Reason</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @foreach (var l in Model)
+                            {
+                                <tr class="nested-parent">
+                                    <td>@l.StudentName</td>
+                                    <td class="check-Prasent"><input type="checkbox" class="checkbox" value="@(l.StudentId)" name=Present checked/></td>
+                                    <td class="check-Late"><input type="checkbox" class="checkbox" value="@(l.StudentId)" name=Late /></td>
+                                    <td>@Html.DisplayFor(item => l.Leave)</td>
+                                    <td>
+                                        <label>@l.LeaveReason</label>
+                                        <input type="hidden" value="@(l.StudentId)" name=@("[" + i + "].StudentId") />
+                                    </td>
+                                </tr>
+                                { i++; }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row-fluid form-actions">
+                <div class="span3 pull-right"   >
+                    <input type="submit" class="btn btn-success pull-right" value="Submit Attendence" />
+                </div>
+            </div>
+                    
+        </form>
+    </div>
+</div>
+@*<div class="container">
+    <div class="container">
+        <div class="col-md-4">
+            <label>StudentName</label>
+        </div>
+        <div class="col-md-2">
+            <label>Present/Absent</label>
+        </div>
+        <div class="col-md-2">
+            <label>Late</label>
+        </div>
+        <div class="col-md-2">
+            <label>Leave</label>
+        </div>
+        <div class="col-md-4">
+            <label>LeaveReason</label>
+        </div>
+    </div>
+    
+    </form>
+
+</div>*@

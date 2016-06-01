@@ -1,0 +1,159 @@
+﻿@model List<SchoolManagementSystem.Models.GradeClassBatchViewModel>
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#deleteBtn').click(function () {
+            if (confirm("Are you sure to Delete?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
+
+        $('#example thead th').each(function (i, v) {
+            // var title = $('#example tfoot th').eq( $(this).index() ).text();
+            var title = $(this).text();
+            if (title != "Actions") {
+                $(this).html(
+                '<input type="text"  class="form-control" style="height:auto" id="exampleInputName2" placeholder="' + title + '">'
+                );
+            }
+            else {
+                $(this).html('<div>' + title + '</div>');
+            }
+        });
+
+        // DataTable
+        var table = $('#example').DataTable();
+
+        // Apply the search
+        table.columns().eq(0).each(function (colIdx) {
+            $('input', table.column(colIdx).header()).on('keyup change', function () {
+                table
+                    .column(colIdx)
+                    .search(this.value)
+                    .draw();
+            });
+        });
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+        $('#print').on('click', function () {
+            reverse();
+            jQuery("#example").print({
+                noPrintSelector: ".actions",
+                // Add this on top
+                //     append: "My Footer<br/>",
+                // Add this at bottom
+                //prepend: "<br/>jQueryScript.net",
+                title: "Al Omam International School"
+            });
+            reverseBack();
+
+        });
+        function reverseBack() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).text();
+                if (title != "Actions") {
+                    $(this).html(
+                    '<input type="text"  class="form-control" style="height:auto" id="exampleInputName2" placeholder="' + title + ' search">'
+                    );
+                }
+            });
+        }
+        function reverse() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).html();
+                var input = $('#exampleInputName2').attr('placeholder');
+                if (input != null) {
+                    var input = input.replace('search', '');
+                }
+                //            debugger
+                if (title != "Actions") {
+                    $(this).html(input);
+                }
+            });
+        }
+    });
+
+</script>
+
+@section PageTitle{
+<div class="page-title">
+    <div>
+        <h1>All Classes in Grade @ViewBag.GradeName </h1>
+    </div>
+</div>
+    }
+<div class="row-fluid" style="overflow:scroll">
+    <div class="span12">
+        <div class="box">
+            <div class="box-content">
+                <div class="btn-toolbar pull-right clearfix">
+                    <div class="btn-group">
+                        <a class="btn btn-circle show-tooltip" title="Add new record" href="AddGrade"><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Edit selected" href="javascript:void(0)"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Delete selected" href="javascript:void(0)"><i class="fa fa-remove"></i></a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="print" class="btn btn-circle show-tooltip" title="Print" href="javascript:void(0)"><i class="fa fa-print"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Export to PDF" href="javascript:void(0)"><i class="fa fa-file-pdf-o"></i></a>
+                        <a class="btn btn-circle show-tooltip" title="Export to Exel" href="javascript:void(0)"><i class="fa fa-file-excel-o"></i></a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn btn-circle show-tooltip" title="Refresh" href="javascript:void(0)"><i class="fa fa-refresh"></i></a>
+                    </div>
+                </div>
+                <div class="clearfix" style="margin-top:10px"></div>
+                <table class="table table-advance" id="example" style="height:inherit">
+                    <thead class="table-head">
+                        <tr>
+                            <th>Grade Name</th>
+                            <th>Class Name</th>
+                            <th>Batch</th>
+                            <th>Sections</th>
+                            <th>No. of Students</th>
+                            <th class="actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+
+                                <td class="text-center">@Model[i].GradeName</td>
+                                <td class="text-center">@Model[i].ClassName</td>
+                                <td class="text-center">@Model[i].BatchName</td>
+                                <td class="text-center">@Model[i].Section</td>
+                                <td class="text-center">@Model[i].CurrentStudentCount</td>
+                                <td class="actions">
+                                    <a class="btn btn-success" href=@("/Admin/ViewAllStudentsInClass/" + Model[i].ClassId)>View Students</a>
+                                    <a class="btn btn-success" href=@("/Admin/ViewAllSubjectTeacherInClass/" + Model[i].ClassId)>Teachers/Subjects</a>
+                                    <a class="btn btn-success" style="width:40px;" href=@("/Admin/EditClass/"+Model[i].ClassId)>Edit</a>
+                                    <a id="deleteBtn" class="btn btn-success" style="width:40px;" href=@("/Admin/DeleteClass/"+Model[i].ClassId)>Delete</a>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

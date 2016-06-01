@@ -1,0 +1,134 @@
+﻿@model List<SchoolManagementSystem.Models.ListInventoryItemsViewModel>
+@{
+    ViewBag.Title = "ListAllInventoryItems";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example thead th').each(function (i, v) {
+            // var title = $('#example tfoot th').eq( $(this).index() ).text();
+            var title = $(this).text();
+            if (title != "Actions") {
+                $(this).html(
+                '<input type="text" class="form-control" id="exampleInputName2" style="width:80px" placeholder="' + title + '">'
+                );
+            }
+            else {
+                $(this).html('<div>' + title + '</div>');
+            }
+        });
+
+        // DataTable
+        var table = $('#example').DataTable();
+
+        // Apply the search
+        table.columns().eq(0).each(function (colIdx) {
+            $('input', table.column(colIdx).header()).on('keyup change', function () {
+                table
+                    .column(colIdx)
+                    .search(this.value)
+                    .draw();
+            });
+        });
+        $('#print').on('click', function () {
+            reverse();
+            jQuery("#example").print({
+                noPrintSelector: ".actions",
+                // Add this on top
+                //append: "My Footer<br/>",
+                // Add this at bottom
+                //prepend: "<br/>jQueryScript.net",
+                title: "Al Omam International School"
+            });
+            reverseBack();
+
+        });
+        function reverseBack() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).text();
+                if (title != "Actions") {
+                    $(this).html(
+                    '<input type="text"  class="form-control" style="height:auto;width:80px" id="exampleInputName2" placeholder="' + title + ' search">'
+                    );
+                }
+            });
+        }
+        function reverse() {
+            $('#example thead th').each(function (i, v) {
+                // var title = $('#example tfoot th').eq( $(this).index() ).text();
+                var title = $(this).html();
+                var input = $('#exampleInputName2').attr('placeholder');
+                if (input != null) {
+                    var input = input.replace('search', '');
+                }
+                //            debugger
+                if (title != "Actions") {
+                    $(this).html(input);
+                }
+            });
+        }
+    });
+
+</script>
+
+
+@section Scripts{
+    <link href="~/Content/DataTables/datatables.min.css" rel="stylesheet" />
+    <script src="~/Content/DataTables/datatables.min.js"></script>
+}
+@section PageTitle{
+    <div class="page-title">
+        <h1>Inventory Items</h1>
+    </div>
+}
+<div class="box">
+    <div class="box-title">
+        <h3>List of Inventory Items</h3>
+    </div>
+    <div class="box-content">
+        <table class="table table-advance" id="example" style="height:inherit">
+            <thead class="table-head">
+                <tr>
+                    <th>Item Name</th>
+                    <th>Grade Name</th>
+                    <th>Category Name</th>
+                    <th>Purchased Price</th>
+                    <th>Sale Price</th>
+                    <th>Quantity</th>
+
+                    <th class="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>@(Model[i].ItemName)</td>
+                        <td>@Model[i].GradeName</td>
+                        <td>@(Model[i].ItemCategoryName + " " + Model[i].UniformSize)</td>
+                        <td>@Model[i].PurchasedPrice</td>
+                        <td>@Model[i].SalePrice</td>
+                        <td>@Model[i].Quantity</td>
+
+                        <td class="actions">
+                            @if (Model[i].CanOrder)
+                            {
+                                <a class="btn btn-info" href=@("/Admin/OrderInventoryItem/" + Model[i].Id)>Order Package</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-info disabled" href=@("/Admin/OrderInventoryItem/" + Model[i].Id)>Order Item</a>
+
+                            }
+                            <a class="btn btn-info  glyphicon glyphicon glyphicon-pencil bcc" href=@("/Admin/EditInventoryItem/"+Model[i].Id)></a>
+                            <a data-confirm="Are you sure?" class="btn btn-danger glyphicon glyphicon glyphicon-trash" rel="nofollow" data-method="delete" href=@("/Admin/DeleteInventoryItem/" + Model[i].Id)></a>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

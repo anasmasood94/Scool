@@ -1,0 +1,282 @@
+﻿@model SchoolManagementSystem.Models.MarksHeadingViewModel
+@{
+    ViewBag.Title = "PreviewResultCard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section PageTitle{
+<div class="page-title">
+    <div>
+        <h1>Preview of Result Card</h1>
+    </div>
+    }
+    <div class="box ">
+        <div class="box-title">
+            <h3>Result Card</h3>
+        </div>
+        <div class="box-content">
+            <table class="table table-bordered table-preview">
+                <thead>
+                    <tr>
+                        @{
+                            double termworkCount = 0;
+                            double examCount = 0;
+                            foreach (var x in Model.marksFormat)
+                            {
+                                if (x.Type.CompareTo("Termwork") == 0)
+                                {
+                                    termworkCount++;
+                                }
+                                else
+                                {
+                                    examCount++;
+                                }
+
+                            }
+                            termworkCount++;
+                            if (Model.heading.TermworkStatus == 1)
+                            {
+                                <th colspan="@termworkCount" style="text-align:center;"><label>@Model.heading.TermworkHeading</label></th>
+                            }
+                            if (Model.heading.TermworkTotalStatus == 1)
+                            {
+                                <th colspan="1" class="col-md-1" style="background-color:@Model.heading.TermworkTotalColor">@Model.heading.TermworkTotalHeading</th>
+                            }
+                            if (Model.heading.ExamsStatus == 1)
+                            {
+                                <th colspan="@examCount" class="col-md-1">@Model.heading.ExamsHeading</th>
+                            }
+                            if (Model.heading.ExamsTotalStatus == 1)
+                            {
+                                <th colspan="1" class="col-md-1" style="background-color:@Model.heading.QuarterPercentageColor">@Model.heading.ExamsTotalHeading</th>
+                            }
+                            if (Model.heading.QuarterTotalStatus == 1)
+                            {
+                                <th colspan="1" class="col-md-1">@Model.heading.QuarterTotalHeading</th>
+                            }
+                            if (Model.heading.QuarterPercentageStatus == 1)
+                            {
+                                <th colspan="1" class="col-md-1">@Model.heading.QuarterPercentageHeading</th>
+                            }
+                        }
+                    </tr>
+                    <tr>
+                        @{
+                            if (Model.heading.TermworkStatus == 1)
+                            {
+                                <th class="col-md-2" style="background-color:@Model.heading.TermworkColor">Subject</th>
+                                foreach (var x in Model.marksFormat)
+                                {
+                                    if (x.Type.CompareTo("Termwork") == 0)
+                                    {
+                                        <th class="" style="background-color:@Model.heading.TermworkColor">@x.Name</th>
+                                    }
+
+                                }
+                            }
+                            if (Model.heading.TermworkTotalStatus == 1)
+                            {
+                                <th class="" style="background-color:@Model.heading.TermworkTotalColor"></th>
+                            }
+                            if (Model.heading.ExamsStatus == 1)
+                            {
+                                foreach (var x in Model.marksFormat)
+                                {
+                                    if (x.Type.CompareTo("Exam") == 0)
+                                    {
+                                        <th class="" style="background-color:@Model.heading.ExamsColor">@x.Name</th>
+                                    }
+                                }
+                            }
+                            if (Model.heading.ExamsTotalStatus == 1)
+                            {
+                                <th class="" style="background-color:@Model.heading.ExamsTotalColor"></th>
+                            }
+                            if (Model.heading.QuarterTotalStatus == 1)
+                            {
+                                <th class="" style="background-color:@Model.heading.QuarterTotalColor"></th>
+                            }
+
+                            if (Model.heading.QuarterPercentageStatus == 1)
+                            {
+                                <th class="" style="background-color:@Model.heading.QuarterPercentageColor"></th>
+                            }
+
+                        }
+                    </tr>
+                    <tr>
+                        @{
+                            double termTotal = 0;
+                            double examTotal = 0;
+
+                            if (Model.heading.TermworkStatus == 1)
+                            {
+                                <th style="background-color:@Model.heading.TermworkColor">Full Marks</th>
+                                foreach (var x in Model.marksFormat)
+                                {
+                                    if (x.Type.CompareTo("Termwork") == 0)
+                                    {
+                                        <th class="" style="background-color:@Model.heading.TermworkColor">@x.TotalMarks</th>
+                                    }
+
+                                }
+                            }
+                            if (Model.heading.TermworkTotalStatus == 1)
+                            {
+                                foreach (var x in Model.marksFormat)
+                                {
+                                    if (x.Type.CompareTo("Termwork") == 0)
+                                    {
+                                        termTotal += (double)x.TotalMarks;
+                                    }
+                                }
+                                <th class="" style="background-color:@Model.heading.TermworkTotalColor">@termTotal</th>
+                            }
+                            if (Model.heading.ExamsStatus == 1)
+                            {
+                                foreach (var x in Model.marksFormat)
+                                {
+                                    if (x.Type.CompareTo("Exam") == 0)
+                                    {
+                                        <th class="" style="background-color:@Model.heading.ExamsColor">@x.TotalMarks</th>
+                                    }
+                                }
+                            }
+                            if (Model.heading.ExamsTotalStatus == 1)
+                            {
+                                foreach (var x in Model.marksFormat)
+                                {
+                                    if (x.Type.CompareTo("Exam") == 0)
+                                    {
+                                        examTotal += (double)x.TotalMarks;
+                                    }
+                                }
+                                <th class="" style="background-color:@Model.heading.ExamsTotalColor">@examTotal</th>
+                            }
+                            if (Model.heading.QuarterTotalStatus == 1)
+                            {
+                                <th class="" style="background-color:@Model.heading.QuarterTotalColor">@(termTotal + examTotal)</th>
+                            }
+
+                            if (Model.heading.QuarterPercentageStatus == 1)
+                            {
+                                <th class="" style="background-color:@Model.heading.QuarterPercentageColor">100%</th>
+                            }
+                        }
+                    </tr>
+                    <tr>
+                        @{
+                            double termTotalPassing = 0;
+                            double examTotalPassing = 0;
+
+                            if (Model.heading.TermworkStatus == 1)
+                            {
+                                <th style="background-color:@Model.heading.TermworkColor">Passing</th>
+                                foreach (var x in Model.marksFormat)
+                                {
+                                    if (x.Type.CompareTo("Termwork") == 0)
+                                    {
+                                        termTotalPassing += (double)((x.PassingP / 100) * x.TotalMarks);
+                                        <th class="" style="background-color:@Model.heading.TermworkColor">@((x.PassingP / 100) * x.TotalMarks)</th>
+                                    }
+
+                                }
+                            }
+                            if (Model.heading.TermworkTotalStatus == 1)
+                            {
+                                foreach (var x in Model.marksFormat)
+                                {
+                                    if (x.Type.CompareTo("Termwork") == 0)
+                                    {
+                                        termTotal += (double)x.TotalMarks;
+                                    }
+                                }
+                                <th class="" style="background-color:@Model.heading.TermworkTotalColor">@termTotalPassing</th>
+                            }
+                            if (Model.heading.ExamsStatus == 1)
+                            {
+                                foreach (var x in Model.marksFormat)
+                                {
+                                    if (x.Type.CompareTo("Exam") == 0)
+                                    {
+                                        examTotalPassing += (double)((x.PassingP / 100) * x.TotalMarks);
+                                        <th class="" style="background-color:@Model.heading.ExamsColor">@((x.PassingP / 100) * x.TotalMarks)</th>
+                                    }
+                                }
+                            }
+                            if (Model.heading.ExamsTotalStatus == 1)
+                            {
+                                foreach (var x in Model.marksFormat)
+                                {
+                                    if (x.Type.CompareTo("Exam") == 0)
+                                    {
+                                        examTotal += (double)x.TotalMarks;
+                                    }
+                                }
+                                <th class="" style="background-color:@Model.heading.ExamsTotalColor">@examTotalPassing</th>
+                            }
+                            if (Model.heading.QuarterTotalStatus == 1)
+                            {
+                                <th class="" style="background-color:@Model.heading.QuarterTotalColor">@(termTotalPassing + examTotalPassing)</th>
+                            }
+
+                            if (Model.heading.QuarterPercentageStatus == 1)
+                            {
+                                <th class="" style="background-color:@Model.heading.QuarterPercentageColor">@(((termTotalPassing + examTotalPassing) / 100) * (termTotal + examTotal))</th>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var x in Model.subjects)
+                        {
+                            <tr>
+                                @{
+                            if (Model.heading.TermworkStatus == 1)
+                            {
+                                <th>@x.Name</th>
+                                foreach (var y in Model.marksFormat)
+                                {
+                                    if (y.Type.CompareTo("Termwork") == 0)
+                                    {
+                                        <th></th>
+                                    }
+                                }
+                            }
+                            if (Model.heading.TermworkTotalStatus == 1)
+                            {
+                                <th></th>
+                            }
+                            if (Model.heading.ExamsStatus == 1)
+                            {
+                                foreach (var y in Model.marksFormat)
+                                {
+                                    if (y.Type.CompareTo("Exam") == 0)
+                                    {
+                                        <th></th>
+                                    }
+                                }
+                            }
+                            if (Model.heading.ExamsTotalStatus == 1)
+                            {
+                                <th></th>
+                            }
+                            if (Model.heading.QuarterTotalStatus == 1)
+                            {
+                                <th></th>
+                            }
+
+                            if (Model.heading.QuarterPercentageStatus == 1)
+                            {
+                                <th></th>
+                            }
+                                }
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
