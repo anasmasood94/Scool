@@ -1,0 +1,83 @@
+﻿@*@model SchoolManagementSystem.Models.StudentExamViewModel
+@{
+    ViewBag.Title = "EnterMarksExam";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        var max = $('#TotalMarks').val();
+        var flag = 0;
+        $('.number-exam').blur(function () {
+            var value = $(this).val();
+            if ($(this).hasClass('error') && value<=max)
+            {
+                flag -= 1;
+                $(this).removeClass('error');
+                var average = $(this).parents(".nested-field").find('.average-exam');
+                var gpa = (value / max) * 4;
+                average.val(gpa);
+            }
+            if (!$(this).hasClass('error') && value > max) {
+                alert('Marks cannot be higher then total marks');
+                $(this).addClass("error");
+                flag += 1;
+            }
+            else {
+                var average = $(this).parents(".nested-field").find('.average-exam');
+                var gpa = (value / max) * 4;
+                average.val(gpa);
+            }
+            
+        });
+        $('#Save').click(function () {
+            if (flag <= 0)
+                $('#Exam-form').submit();
+            
+        });
+    });
+</script>
+<div class="page-title">
+    <div>
+        <h1>@ViewBag.PageTitle</h1>
+    </div>
+</div>
+<div class="box" id="Marks-box">
+    <div class="box-title">
+        <h3> @Model.marks.Name </h3>
+    </div>
+    <div class="box-content">
+        <form action="#" id="Exam-form" method="post">
+            <table class="table table-striped" id="marks">
+                <thead>
+                    <tr>
+                        <th>Student Id</th>
+                        <th>Student Name</th>
+                        <th>Performance Report</th>
+                        <th>@Model.marks.Name</th>
+                        <th>Average (4.0)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                        for (int i = 0; i < Model.student.Count; i++)
+                        {
+                            <tr class="nested-field">
+                                <td><label>@Model.student[i].Id</label><input type="hidden" name="[@i].StudentId" value="@Model.student[i].Id" /></td>
+                                <td><label>@(Model.student[i].FirstName + " " + Model.student[i].SecondName + " " + Model.student[i].ThirdName + " " + Model.student[i].FourthName)</label></td>
+                                <td><input type="text" name="[@i].PerformanceReport" /></td>
+                                <td><input type="text" class="number-exam" name="[@i].Marks" /></td>
+                                <td><input type="text" class="average-exam" readonly /></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <div>
+                <button type="button" id="Save" class="btn btn-success">Save</button>
+            </div>
+        </form>
+</div>
+</div>*@
+
+
