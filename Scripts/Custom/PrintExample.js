@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () { 
 $('#print').on('click', function () {
-    reverse();
-    jQuery("#example").print({
+    //reverse();
+    jQuery("#table1").print({
         noPrintSelector: ".actions",
         // Add this on top
         append: "My Footer<br/>",
@@ -9,32 +9,32 @@ $('#print').on('click', function () {
         prepend: "<br/>jQueryScript.net",
         title: "My Title"
     });
-    reverseBack();
+    //reverseBack();
 
 });
-function reverseBack() {
-    $('#example thead th').each(function (i, v) {
-        // var title = $('#example tfoot th').eq( $(this).index() ).text();
-        var title = $(this).text();
-        if (title != "Actions") {
-            $(this).html(
-            '<input type="text"  class="form-control" style="height:auto" id="exampleInputName2" placeholder="' + title + ' search">'
-            );
-        }
-    });
-}
-function reverse() {
-    $('#example thead th').each(function (i, v) {
-        // var title = $('#example tfoot th').eq( $(this).index() ).text();
-        var title = $(this).html();
-        var input = $('#exampleInputName2').attr('placeholder');
-        if (input != null) {
-            var input = input.replace('search', '');
-        }
-        //            debugger
-        if (title != "Actions") {
-            $(this).html(input);
-        }
-    });
-}
+//function reverseBack() {
+//    $('#table1 thead th').each(function (i, v) {
+//        // var title = $('#table1 tfoot th').eq( $(this).index() ).text();
+//        var title = $(this).text();
+//        if (title != "Actions") {
+//            $(this).html(
+//            '<input type="text"  class="form-control" style="height:auto" id="exampleInputName2" placeholder="' + title + ' search">'
+//            );
+//        }
+//    });
+//}
+//function reverse() {
+//    $('#table1 thead th').each(function (i, v) {
+//        // var title = $('#table1 tfoot th').eq( $(this).index() ).text();
+//        var title = $(this).html();
+//        var input = $('#table1InputName2').attr('placeholder');
+//        if (input != null) {
+//            var input = input.replace('search', '');
+//        }
+//        //            debugger
+//        if (title != "Actions") {
+//            $(this).html(input);
+//        }
+//    });
+//}
 });

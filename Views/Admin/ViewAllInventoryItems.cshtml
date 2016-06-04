@@ -3,38 +3,13 @@
     ViewBag.Title = "ViewAllInventoryItems";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<script>
-    $('#example thead th').each(function (i, v) {
-        // var title = $('#example tfoot th').eq( $(this).index() ).text();
-        var title = $(this).text();
-        if (title != "Actions") {
-            $(this).html(
-            '<input type="text"  class="form-control" style="height:auto" id="exampleInputName2" placeholder="' + title + '">'
-            );
-        }
-        else {
-            $(this).html('<div>' + title + '</div>');
-        }
-    });
-
-    // DataTable
-    var table = $('#example').DataTable();
-
-    // Apply the search
-    table.columns().eq(0).each(function (colIdx) {
-        $('input', table.column(colIdx).header()).on('keyup change', function () {
-            table
-                .column(colIdx)
-                .search(this.value)
-                .draw();
-        });
-    });
-</script>
 @section Scripts{
-<script src="~/Scripts/Custom/PrintExample.js"></script>
-<link href="~/Content/assets/data-tables/DT_bootstrap.css" rel="stylesheet" />
-<script src="~/Content/assets/data-tables/DT_bootstrap.js"></script>
-<script src="~/Content/assets/data-tables/jquery.dataTables.js"></script>
+    <link href="~/Content/assets/data-tables/DT_bootstrap.css" rel="stylesheet" />
+    <script src="~/Content/assets/data-tables/jquery.dataTables.js"></script>
+    <script src="~/Content/assets/data-tables/DT_bootstrap.js"></script>
+
+    <script src="~/Scripts/jQuery.print.js"></script>
+    <script src="~/Scripts/Custom/PrintExample.js"></script>
 }
 @section PageTitle{
     <div class="page-title">

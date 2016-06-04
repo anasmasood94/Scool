@@ -6,103 +6,23 @@
 
 @model List<SchoolManagementSystem.Models.StudentLeavesViewModel>
 
-<script>
+@section Scripts{
+    <link href="~/Content/assets/data-tables/DT_bootstrap.css" rel="stylesheet" />
+    <script src="~/Content/assets/data-tables/jquery.dataTables.js"></script>
+    <script src="~/Content/assets/data-tables/DT_bootstrap.js"></script>
 
+    <script src="~/Scripts/jQuery.print.js"></script>
+    <script src="~/Scripts/Custom/PrintExample.js"></script>
+}
 
-    //$(document).ready(function () {
-
-    //    $('#example thead th').each(function (i, v) {
-    //        // var title = $('#example tfoot th').eq( $(this).index() ).text();
-    //        var title = $(this).text();
-    //        if (title != "Actions") {
-    //            $(this).html(
-    //            '<input type="text" class="form-control" id="exampleInputName2" placeholder="' + title + '">'
-    //            );
-    //        }
-    //        else {
-    //            $(this).html('<div style="width:120px;">' + title + '</div>');
-    //        }
-    //    });
-
-    //    // DataTable
-    //    var table = $('#example').DataTable();
-
-    //    // Apply the search
-    //    table.columns().eq(0).each(function (colIdx) {
-    //        $('input', table.column(colIdx).header()).on('keyup change', function () {
-    //            table
-    //                .column(colIdx)
-    //                .search(this.value)
-    //                .draw();
-    //        });
-    //    });
-    //    $('#print').on('click', function () {
-    //        reverse();
-    //        jQuery("#example").print({
-    //            noPrintSelector: ".actions",
-    //            // Add this on top
-    //            //append: "My Footer<br/>",
-    //            // Add this at bottom
-    //            //prepend: "<br/>jQueryScript.net",
-    //            title: "Al Omam International School"
-    //        });
-    //        reverseBack();
-
-    //    });
-    //    function reverseBack() {
-    //        $('#example thead th').each(function (i, v) {
-    //            // var title = $('#example tfoot th').eq( $(this).index() ).text();
-    //            var title = $(this).text();
-    //            if (title != "Actions") {
-    //                $(this).html(
-    //                '<input type="text"  class="form-control" style="height:auto" id="exampleInputName2" placeholder="' + title + ' search">'
-    //                );
-    //            }
-    //        });
-    //    }
-    //    function reverse() {
-    //        $('#example thead th').each(function (i, v) {
-    //            // var title = $('#example tfoot th').eq( $(this).index() ).text();
-    //            var title = $(this).html();
-    //            var input = $('#exampleInputName2').attr('placeholder');
-    //            if (input != null) {
-    //                var input = input.replace('search', '');
-    //            }
-    //            //            debugger
-    //            if (title != "Actions") {
-    //                $(this).html(input);
-    //            }
-    //        });
-    //    }
-    //});
-
-    $(document).ready(function () {
-        $(".request").submit(function () {
-            var a = $(this).parent().parent().find('.status');
-            $(this).find('.formStatus').val(a.val());
-            return true;
-        });
-    });
-
-</script>
-
+@section PageTitle{
 <div class="page-title">
     <div>
         <h1><i class="fa fa-list"></i> Employee Leaves Requests </h1>
     </div>
 </div>
-
-<div class="row-fluid" style="overflow:scroll">
-    @if (ViewBag.Message != null)
-    {
-        <div style=" margin-top:20px;">
-            <div class="alert alert-info main-alert">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <div id="flash_info">@ViewBag.Message</div>
-            </div>
-        </div>
-
     }
+<div class="row-fluid">
     <div class="span12">
         <div class="box">
             <div class="box-content">
@@ -121,8 +41,8 @@
                         <a class="btn btn-circle show-tooltip" title="Refresh" href="javascript:void(0)"><i class="fa fa-refresh"></i></a>
                     </div>
                 </div>
-                <div class="clearfix" style="margin-top:10px"></div>
-                <table class="table table-advance" id="example" style="height:inherit">
+                <div class="clearfix"></div>
+                <table class="table table-advance" id="table1">
                     <thead class="table-head">
                         <tr>
                             <th>Emp Id</th>

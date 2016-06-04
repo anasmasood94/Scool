@@ -2,92 +2,14 @@
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#example thead th').each(function (i, v) {
-            // var title = $('#example tfoot th').eq( $(this).index() ).text();
-            var title = $(this).text();
-            if (title != "Actions") {
-                $(this).html(
-                '<input type="text"  class="form-control" style="height:auto;width:auto" id="exampleInputName2" placeholder="' + title + '">'
-                );
-            }
-            else {
-                $(this).html('<div style="width:auto !important">' + title + '</div>');
-            }
-        });
-
-        // DataTable
-        var table = $('#example').DataTable();
-
-        // Apply the search
-        table.columns().eq(0).each(function (colIdx) {
-            $('input', table.column(colIdx).header()).on('keyup change', function () {
-                table
-                    .column(colIdx)
-                    .search(this.value)
-                    .draw();
-            });
-        });
-        function printDiv(divName) {
-            var printContents = document.getElementById(divName).innerHTML;
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents;
-
-            window.print();
-
-            document.body.innerHTML = originalContents;
-        }
-        $('#print').on('click', function () {
-            reverse();
-            jQuery("#example").print({
-                noPrintSelector: ".actions",
-                // Add this on top
-                //append: "My Footer<br/>",
-                // Add this at bottom
-                //prepend: "<br/>jQueryScript.net",
-                title: "Al Omam International School"
-            });
-            reverseBack();
-
-        });
-        function reverseBack() {
-            $('#example thead th').each(function (i, v) {
-                // var title = $('#example tfoot th').eq( $(this).index() ).text();
-                var title = $(this).text();
-                if (title != "Actions") {
-                    $(this).html(
-                    '<input type="text"  class="form-control" style="height:auto" id="exampleInputName2" placeholder="' + title + ' search">'
-                    );
-                }
-            });
-        }
-        function reverse() {
-            $('#example thead th').each(function (i, v) {
-                // var title = $('#example tfoot th').eq( $(this).index() ).text();
-                var title = $(this).html();
-                var input = $('#exampleInputName2').attr('placeholder');
-                if (input != null) {
-                    var input = input.replace('search', '');
-                }
-                //            debugger
-                if (title != "Actions") {
-                    $(this).html(input);
-                }
-            });
-        }
-    });
-
-</script>
 @section Scripts{
-    <link href="~/Content/DataTables/datatables.min.css" rel="stylesheet" />
-    <script src="~/Content/DataTables/datatables.min.js"></script>
+    <link href="~/Content/assets/data-tables/DT_bootstrap.css" rel="stylesheet" />
+    <script src="~/Content/assets/data-tables/jquery.dataTables.js"></script>
+    <script src="~/Content/assets/data-tables/DT_bootstrap.js"></script>
+
     <script src="~/Scripts/jQuery.print.js"></script>
-    @*<script src="~/Scripts/Custom/PrintExample.js"></script>*@
+    <script src="~/Scripts/Custom/PrintExample.js"></script>
 }
-
-
 @section PageTitle{
 <div class="page-title">
     <div>
@@ -109,8 +31,8 @@
                         <a class="btn btn-circle show-tooltip" title="Refresh" href="javascript:void(0)"><i class="fa fa-refresh"></i></a>
                     </div>
                 </div>
-                <div class="clearfix" style="margin-top:10px"></div>
-                <table class="table table-advance" id="example" style="height:inherit">
+                <div class="clearfix" ></div>
+                <table class="table table-advance" id="table1">
                     <thead class="table-head">
                         <tr>
                             <th>Name</th>

@@ -20,8 +20,12 @@
 </script>
 
 @section Scripts{
-    <link href="~/Content/DataTables/datatables.min.css" rel="stylesheet" />
-    <script src="~/Content/DataTables/datatables.min.js"></script>
+    <link href="~/Content/assets/data-tables/DT_bootstrap.css" rel="stylesheet" />
+    <script src="~/Content/assets/data-tables/jquery.dataTables.js"></script>
+    <script src="~/Content/assets/data-tables/DT_bootstrap.js"></script>
+
+    <script src="~/Scripts/jQuery.print.js"></script>
+    <script src="~/Scripts/Custom/PrintExample.js"></script>
 }
 
 @section PageTitle{
@@ -42,7 +46,7 @@
 
         <div class="row-fluid">
             <div class="table-responsive">
-                <table class="table table-bordered ">
+                <table class="table table-bordered " >
                     <thead>
                         <tr>
                             <th>Title</th>

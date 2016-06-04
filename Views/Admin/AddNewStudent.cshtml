@@ -7,9 +7,30 @@
 @section Scripts{
     <script src="~/Content/assets/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <link href="~/Content/assets/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+    <link href="~/Content/assets/bootstrap-fileupload/bootstrap-fileupload.css" rel="stylesheet" />
     <script src="~/Content/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="~/Scripts/Custom/Std001.js"></script>
+    <script src="~/Content/assets/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+    @*<script src="~/Content/assets/jquery-validation/dist/additional-methods.min.js"></script>
+        <script src="~/Content/assets/jquery-validation/dist/jquery.validate.min.js"></script>*@
 }
+
+<div id="modalCSV" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel2">Upload Students by CSV</h3>
+    </div>
+    <form action="/Admin/AddStudentCSV" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+            <p>Upload CSV</p><br />
+            <input type="file" name="File" id="File"/>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-primary" type="submit">Upload</button>
+        </div>
+    </form>
+</div>
 
 @section PageTitle{
     <div class="page-title">
@@ -22,13 +43,13 @@
     <div class="span12">
         <div class="box box-blue">
             <div class="box-title">
-                <h3><i class="icon-reorder"></i> Admission Form</h3>
+                <h3><i class="fa fa-reorder"></i> Admission Form</h3>
                 <div class="box-tool">
-                    <a href="" class="fa fa-upload fa-5x show-tooltip" title="Upload by CSV"></a>
+                    <a href="#modalCSV" role="button" data-toggle="modal" class="btn btn-success"><i class="fa fa-upload"></i> Upload by CSV</a>
                 </div>
             </div>
             <div class="box-content">
-                <form action="AddNewStudent" class="form-horizontal" method="post" name="StudentForm">
+                <form action="AddNewStudent" class="form-horizontal" id="validation-form" method="post">
                     <div class="form-wizard" id="form-wizard-2">
                         <ul class="row-fluid steps steps-fill">
                             <li class="span3">
@@ -75,44 +96,130 @@
 
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab2-1">
+
                                 <div class="row-fluid">
-                                    <div class="span5">
-                                        <div class="control-group">
-                                            <label class="text-right control-label" for="studentId">Student ID</label>
+                                    <div class="span6 control-group">
+                                        <label class="control-label" for="studentId">Student ID</label>
+                                        <div class="controls">
                                             <input type="text" name="StudentId" id="studentId" value="@Model.Id" readonly />
                                         </div>
-                                        <div class="control-group">
-                                            <label class="text-right control-label" for="FirstName">First Name</label>
+                                    </div>
+                                </div>
+
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label class=" control-label" for="FirstName">First Name</label>
+                                        <div class="controls">
                                             <input type="text" name="FirstName" id="firstname" required />
                                         </div>
-                                        <div class="control-group">
-                                            <label for="thirdname" class="control-label text-right">Third Name</label>
+                                    </div>
+
+                                    <div class="span6 control-group">
+                                        <label for="secondname" class="control-label">Second Name</label>
+                                        <div class="controls">
+                                            <input type="text" name="SecondName" id="secondname" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="thirdname" class="control-label text-right">Third Name</label>
+                                        <div class="controls">
                                             <input type="text" name="ThirdName" id="thirdname" required>
                                         </div>
-                                        <div class="control-group">
-                                            <label for="arabicfirstname" class="control-label text-right">Arabic First Name</label>
+                                    </div>
+
+                                    <div class="span6 control-group">
+                                        <label for="fourthname" class="control-label text-right">Fourth Name</label>
+                                        <div class="controls">
+                                            <input type="text" name="FourthName" id="fourthname" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="arabicfirstname" class="control-label text-right">Arabic First Name</label>
+                                        <div class="controls">
                                             <input type="text" name="ArabicFirstName" id="arabicfirstname">
                                         </div>
-                                        <div class="control-group">
-                                            <label for="arabicthirdname" class="control-label text-right">Arabic Third Name</label>
+                                    </div>
+
+                                    <div class="span6 control-group">
+                                        <label for="arabicsecondname" class="control-label text-right">Arabic Second Name</label>
+                                        <div class="controls">
+                                            <input type="text" name="ArabicSecondName" id="arabicsecondname">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="arabicthirdname" class="control-label text-right">Arabic Third Name</label>
+                                        <div class="controls">
                                             <input type="text" name="ArabicThirdName" id="arabicthirdname">
                                         </div>
-                                        <div class="control-group">
-                                            <label for="PasportNumber" class="control-label text-right">Pasport Number</label>
+                                    </div>
+                                    <div class="span6 control-group">
+                                        <label for="arabicfourthname" class="control-label text-right">Arabic Fourth Name</label>
+                                        <div class="controls">
+                                            <input type="text" name="ArabicFourthName" id="arabicfourthname">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="PasportNumber" class="control-label text-right">Pasport Number</label>
+                                        <div class="controls">
                                             <input type="text" name="PassportNumber" id="PasportNumber">
                                         </div>
-                                        <div class="control-group">
-                                            <label for="grade" class="control-label text-right">Grade</label>
+                                    </div>
+                                    <div class="span6 control-group">
+                                        <label for="iqamanumber" class="control-label text-right">Iqama Number</label>
+                                        <div class="controls">
+                                            <input type="text" name="IqamaNo" id="iqamanumber">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="grade" class="control-label text-right">Grade</label>
+                                        <div class="controls">
                                             @Html.DropDownList("Grade", gradeList, new { @class = "form-control", style = "height:30px;margin-top:5px" })
                                         </div>
-                                        <div class="control-group">
-                                            <label for="dateOfJoining" class="control-label text-right">Joining Date</label>
+                                    </div>
+                                    <div class="span6 control-group">
+                                        <label for="dob" class="control-label text-right">Date Of Birth</label>
+                                        <div class="controls">
+                                            <input type="text" name="DateOfBirth" id="dateOfBirth">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="dateOfJoining" class="control-label text-right">Joining Date</label>
+                                        <div class="controls">
                                             <input type="text" name="DateOfJoining" id="dateOfJoining">
                                         </div>
-                                        <div class="control-group">
-                                            <label for="birthplace" class="control-label text-right">Place of Birth</label>
-                                            <select name="PlaceOfBirth">
+                                    </div>
+                                    <div class="span6 control-group">
+                                        <label for="quater" class="control-label text-right">Quarter</label>
+                                        <div class="controls">
+                                            <select name="Quarter">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="birthplace" class="control-label text-right">Place of Birth</label>
+                                        <div class="controls">
+                                            <select name="PlaceOfBirth" data-rule-required="true">
+                                                <option value="">---Please Select---</option>
                                                 <option value="AX">Åland Islands</option>
                                                 <option value="AL">Albania</option>
                                                 <option value="DZ">Algeria</option>
@@ -365,8 +472,24 @@
 
                                             </select>
                                         </div>
-                                        <div class="control-group">
-                                            <label for="nationality" class="control-label text-right">Nationality</label>
+                                    </div>
+                                    <div class="span6 control-group">
+                                        <label for="gender" class="control-label text-right">Gender</label>
+                                        <div class="controls">
+                                            <select name="Gender">
+
+                                                <option> Male </option>
+                                                <option> Female </option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+
+                                        <label for="nationality" class="control-label text-right">Nationality</label>
+                                        <div class="controls">
                                             <select name="Nationality">
 
                                                 <option value="AX">Åland Islands</option>
@@ -621,53 +744,10 @@
 
                                             </select>
                                         </div>
-                                        
                                     </div>
-                                    <div class="span5">
-                                        <div class="control-group">
-                                            <label for="secondname" class="control-label text-right">Second Name</label>
-                                            <input type="text" name="SecondName" id="secondname" required>
-                                        </div>
-                                        <div class="control-group">
-                                            <label for="fourthname" class="control-label text-right">Fourth Name</label>
-                                            <input type="text" name="FourthName" id="fourthname" required>
-                                        </div>
-                                        <div class="control-group">
-                                            <label for="arabicsecondname" class="control-label text-right">Arabic Second Name</label>
-                                            <input type="text" name="ArabicSecondName" id="arabicsecondname">
-                                        </div>
-                                        <div class="control-group">
-                                            <label for="arabicfourthname" class="control-label text-right">Arabic Fourth Name</label>
-                                            <input type="text" name="ArabicFourthName" id="arabicfourthname">
-                                        </div>
-                                        <div class="control-group">
-                                            <label for="iqamanumber" class="control-label text-right">Iqama Number</label>
-                                            <input type="text" name="IqamaNo" id="iqamanumber">
-                                        </div>
-                                        <div class="control-group">
-                                            <label for="dob" class="control-label text-right">Date Of Birth</label>
-                                            <input type="text" name="DateOfBirth" id="dateOfBirth">
-                                        </div>
-                                        <div class="control-group">
-                                            <label for="quater" class="control-label text-right">Quarter</label>
-                                            <select name="Quarter">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                            </select>
-                                        </div>
-                                        <div class="control-group">
-                                            <label for="gender" class="control-label text-right">Gender</label>
-                                            <select name="Gender">
-
-                                                <option> Male </option>
-                                                <option> Female </option>
-
-                                            </select>
-                                        </div>
-                                        <div class="control-group">
-                                            <label for="language" class="control-label text-right">Language</label>
+                                    <div class="span6 control-group">
+                                        <label for="language" class="control-label text-right">Language</label>
+                                        <div class="controls">
                                             <select name="Language">
 
                                                 <option value="English">English</option>
@@ -679,10 +759,14 @@
 
                                             </select>
                                         </div>
-                                        <div class="control-group">
-                                            <label for="religion" class="control-label text-right">Religion</label>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="religion" class="control-label text-right">Religion</label>
+                                        <div class="controls">
                                             <select name="Religion">
-
+                                                <option value="Islam">Islam</option>
                                                 <option value="Chritianity">Chritianity</option>
                                                 <option value="Budhism">Budhism</option>
                                                 <option value="Hinduism">Hinduism</option>
@@ -691,35 +775,42 @@
                                             </select>
                                         </div>
                                     </div>
+                                    @*<div class="control-group">
+                                            <label for="uploadfile" class="control-label">Upload File</label>
+                                            <div class="controls">
+                                                <input type="file" name="uploadfile" id="uploadfile" class="input-xlarge">
+                                            </div>
+                                        </div>*@
                                 </div>
-
                             </div>
 
                             <div class="tab-pane" id="tab2-2">
                                 <div class="row-fluid">
-                                    <div class="span10">
-                                        <div class="control-group">
-                                            <label for="address" class="control-label text-right">Address</label>
+                                    <div class="span6 control-group">
+                                        <label for="address" class="control-label text-right">Address</label>
+                                        <div class="controls">
                                             <input type="text" class="input-xxlarge" name="Address1" id="address">
                                         </div>
-                                        <div class="control-group">
-                                            <label for="address2" class="control-label text-right">Address 2</label>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="address2" class="control-label text-right">Address 2</label>
+                                        <div class="controls">
                                             <input type="text" class="input-xxlarge" name="Address2" id="address2">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row-fulid">
-                                    <div class="span5">
-                                        <div class="control-group">
-                                            <label for="city" class="control-label text-right">City</label>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="city" class="control-label text-right">City</label>
+                                        <div class="controls">
                                             <input type="text" name="City" id="city">
                                         </div>
-                                        <div class="control-group">
-                                            <label for="phone" class="control-label text-right">Phone</label>
-                                            <input type="text" name="HomePhone" id="phone">
-                                        </div>
-                                        <div class="control-group">
-                                            <label for="country" class="control-label text-right">Country</label>
+                                    </div>
+                                    <div class="span6 control-group  ">
+                                        <label for="country" class="control-label text-right">Country</label>
+                                        <div class="controls">
                                             <select name="Country">
 
                                                 <option value="AX">Åland Islands</option>
@@ -975,33 +1066,53 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="span5">
-                                        <div class="control-group">
-                                            <label for="mobile" class="control-label text-right" style="color:red">Mobile (for notifications)</label>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="phone" class="control-label text-right">Phone</label>
+                                        <div class="controls">
+                                            <input type="text" name="HomePhone" id="phone">
+                                        </div>
+                                    </div>
+                                    <div class="span6 control-group  ">
+                                        <label for="mobile" class="control-label text-right" style="color:red">Mobile (for notifications)</label>
+                                        <div class="controls">
                                             <input type="text" name="MobileNumber" id="mobile">
                                         </div>
-                                        <div class="control-group">
-                                            <label for="secemail" class="control-label text-right" style="color:red">Email (for notifications)</label>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="secemail" class="control-label text-right" style="color:red">Email (for notifications)</label>
+                                        <div class="controls">
                                             <input type="email" name="Email" id="secemail">
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
+
 
                             <div class="tab-pane" id="tab2-3">
 
                                 <div class="row-fluid">
-                                    <div class="span5">
-                                        <div class="control-group">
-                                            <label for="currentweight" class="control-label text-right">Current Weight</label>
+                                    <div class="span6 control-group">
+                                        <label for="currentweight" class="control-label text-right">Current Weight</label>
+                                        <div class="controls">
                                             <input type="text" name="Weight" id="currentweight">
                                         </div>
-                                        <div class="control-group">
-                                            <label for="currentheight" class="control-label">Current Height</label>
+                                    </div>
+                                    <div class="  span6 control-group">
+                                        <label for="currentheight" class="control-label">Current Height</label>
+                                        <div class="controls">
                                             <input type="text" name="Height" id="currentheight">
                                         </div>
-                                        <div class="control-group">
-                                            <label for="country" class="control-label text-right">Blood Group</label>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="country" class="control-label text-right">Blood Group</label>
+                                        <div class="controls">
                                             <select name="BloodGroup">
 
                                                 <option value="Unknown">Unknown</option>
@@ -1017,185 +1128,202 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="span5">
-                                        <div class="control-group">
-                                            <label for="disability" class="control-label text-right">Disability</label>
+                                    <div class="  span6 control-group">
+                                        <label for="disability" class="control-label text-right">Disability</label>
+                                        <div class="controls">
                                             <input type="text" name="Disability" id="disability">
                                         </div>
-                                        <div class="control-group">
-                                            <label for="specialneeds" class="control-label text-right">Special Needs</label>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="specialneeds" class="control-label text-right">Special Needs</label>
+                                        <div class="controls">
                                             <input type="text" name="SpeicialNeeds" id="specialneeds">
                                         </div>
                                     </div>
-                            </div>
                                 </div>
+                            </div>
+
 
                             <div class="tab-pane" id="tab2-4">
 
                                 <div class="row-fluid">
-                                    <div class="span5">
-                                        <div class="control-group">
-                                            <label for="previousInstitute" class="control-label text-right">Previous Institute</label>
+                                    <div class="span6 control-group">
+                                        <label for="previousInstitute" class="control-label text-right">Previous Institute</label>
+                                        <div class="controls">
                                             <input type="text" name="PreviousInstitue" id="previousInstitute">
                                         </div>
-                                        <div class="control-group">
-                                            <label for="totalmarks" class="control-label text-center">Total Marks</label>
+                                    </div>
+                                    <div class="  span6 control-group">
+                                        <label for="passingYear" class="control-label text-right">Passing Year</label>
+                                        <div class="controls">
+                                            <input type="text" name="PassingYear" id="passingYear">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="totalmarks" class="control-label text-center">Total Marks</label>
+                                        <div class="controls">
                                             <input type="text" name="TotalMarks" id="totalmarks">
                                         </div>
                                     </div>
-                                    <div class="span5">
-                                        <div class="control-group">
-                                            <label for="passingYear" class="control-label text-right">Passing Year</label>
-                                            <input type="text" name="PassingYear" id="passingYear">
-                                        </div>
-                                        <div class="control-group">
-                                            <label for="obtainedmarks" class="control-label text-right">Obtained Marks</label>
+                                    <div class="  span6 control-group">
+                                        <label for="obtainedmarks" class="control-label text-right">Obtained Marks</label>
+                                        <div class="controls">
                                             <input type="text" name="ObtainedMarks" id="obtainedmarks">
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
+
 
                             <div class="tab-pane" id="tab2-5">
 
                                 <div class="row-fluid">
-                                    <div class="span5">
-                                        <div class="control-group">
-                                            <label for="ename" class="control-label text-right">Name</label>
+                                    <div class="span6 control-group">
+                                        <label for="ename" class="control-label text-right">Name</label>
+                                        <div class="controls">
                                             <input type="text" name="EmergencyName" id="ename">
                                         </div>
-                                        <div class="control-group">
-                                            <label for="ephone" class="control-label text-right">Phone</label>
+                                    </div>
+                                    <div class="  span6 control-group">
+                                        <label for="emobile" class="control-label text-right">Mobile</label>
+                                        <div class="controls">
+                                            <input type="text" name="EmergencyMobile_" id="emobile">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row-fluid">
+                                    <div class="span6 control-group">
+                                        <label for="ephone" class="control-label text-right">Phone</label>
+                                        <div class="controls">
                                             <input type="text" name="EmergencyPhone" id="ephone">
                                         </div>
                                     </div>
-                                    <div class="span5">
-                                        <div class="control-group">
-                                            <label for="emobile" class="control-label text-right">Mobile</label>
-                                            <input type="text" name="EmergencyMobile_" id="emobile">
-                                        </div>
-                                        <div class="control-group">
-                                            <label for="eemail" class="control-label text-right">Email</label>
+                                    <div class="  span6 control-group">
+                                        <label for="eemail" class="control-label text-right">Email</label>
+                                        <div class="controls">
                                             <input type="text" name="EmergencyEmail" id="eemail">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="tab-pane" id="tab2-6">
+                            <div class="tab-pane container-fluid" id="tab2-6">
                                 <div class="row-fluid">
-                                    <div class="span12">
-                                        <div class="row-fluid">
-                                            <div class="span4">
-                                                <div class="control-group">
-                                                    <input id="radioButton1" type="radio" name="Parent" checked onclick="parentAlreadyExits()" /><label style="display:inline;"> Parent Already Exists</label>
+                                    <div class="span-12">
+                                        <div>
+                                            <input id="radioButton1" type="radio" name="Parent" value="1" checked onclick="parentAlreadyExits()" /><label style="display:inline;"> Parent Already Exists</label>
 
-                                                </div>
-                                                <div class="control-group">
-                                                    <input id="radioButton2" type="radio" name="Parent" onclick="newParent()" /><label style="display:inline;">  New Parent</label>
-                                                </div>
-                                            </div>
                                         </div>
-                                        <div class="row-fluid" id="parentExistsForm">
-                                            <div class="box">
-                                                <div class="box-title">
-                                                    Parent Information
-                                                </div>
-                                                <div class="box-content">
-                                                    <div class="row-fluid">
-                                                        <div class="span5">
-                                                            <div class="control-group">
-                                                                <label class="control-label text-right">Select Parent</label>
-                                                                <input type="text" id="getParent" placeholder="Enter student number..." />
-                                                            </div>
-                                                        </div>
-                                                        <div class="span4">
-                                                            <input type="button" id="getParentBtn" class="form-control btn btn-success" value="check parent" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                        <div>
+                                            <input id="radioButton2" type="radio" name="Parent" value="2" onclick="newParent()" /><label style="display:inline;">  New Parent</label>
                                         </div>
                                     </div>
                                 </div>
-                                
 
-                                
-
-                                <div class="row-fluid" id="newParentForm" hidden>
-                                    <div class="span12">
-                                        <div class="box">
-                                            <div class="box-title">
-                                                Personal Information (Parent 1)
-                                            </div>
-                                            <div class="box-content">
-                                                <div class="row-fluid">
-                                                    <div class="span5">
-                                                        <div class="control-group">
-                                                            <label class="control-label text-right">Father Name</label>
-                                                            <input type="text" name="FatherName" />
-                                                        </div>
-                                                        <div class="control-group">
-                                                            <label class="control-label text-right">Iqama Number</label>
-                                                            <input type="text" name="FatherIqamaNumber" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="span5">
-                                                        <div class="control-group">
-                                                            <label class="control-label text-right">Iqama Expiry</label>
-                                                            <input type="text" name="FatherIqamaExpiry" id="iqamaExpiry" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div class="row-fluid" id="parentExistsForm" style="margin-top:20px;">
+                                    <div class="box box-blue">
+                                        <div class="box-title">
+                                            Parent Information
                                         </div>
-                                        <div class="box box-blue">
-                                            <div class="box-title">
-                                                Contact Information
-                                            </div>
-                                            <div class="box-content">
-                                                <div class="row-fluid">
-                                                    <div class="span5">
-                                                        <div class="control-group">
-                                                            <label class="control-label text-right" style="color:red;">Mobile (for notifications)</label>
-                                                            <input type="text" name="FatherMobile" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="span5">
-                                                        <div class="control-group">
-                                                            <label class="control-label text-right" style="color:red;">Email (for notifications)</label>
-                                                            <input type="text" name="FatherEmail" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="box box-blue">
-                                            <div class="box-title">
-                                                Personal Information (Parent 2)
-                                            </div>
-                                            <div class="box-content">
-                                                <div class="row-fluid">
-                                                    <div class="span5">
-                                                        <div class="control-group">
-                                                            <label class="control-label text-right">Mother Name</label>
-                                                            <input type="text" name="MotherName" />
-                                                        </div>
-                                                        <div class="control-group">
-                                                            <label class="control-label text-right">Email</label>
-                                                            <input type="text" name="MotherEmail" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="span5">
-                                                        <label class="control-label text-right">Mobile</label>
-                                                        <input type="text" name="MotherMobile" />
+                                        <div class="box-content">
+                                            <div class="row-fluid">
+                                                <div class="span6 control-group">
+                                                    <label class="control-label text-right">Select Parent</label>
+                                                    <div class="controls">
+                                                        <input type="text" placeholder="Enter student number..." />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
+                                </div>
+
+                                <div class="row-fluid" id="newParentForm" hidden style="margin-top:20px;">
+                                    <div class="box box-blue">
+                                        <div class="box-title">
+                                            Personal Information (Parent 1)
+                                        </div>
+                                        <div class="box-content">
+                                            <div class="row-fluid">
+                                                <div class="span6 control-group">
+                                                    <label class="control-label text-right">Father Name</label>
+                                                    <div class="controls">
+                                                        <input type="text" name="FatherName" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span6 control-group">
+                                                    <label class="control-label text-right">Iqama Number</label>
+                                                    <div class="controls">
+                                                        <input type="text" name="FatherIqamaNumber" />
+                                                    </div>
+                                                </div>
+                                                <div class="  span6 control-group">
+                                                    <label class="control-label text-right">Iqama Expiry</label>
+                                                    <div class="controls">
+                                                        <input type="text" name="FatherIqamaExpiry" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box box-blue">
+                                        <div class="box-title">
+                                            Contact Information
+                                        </div>
+                                        <div class="box-content">
+                                            <div class="row-fluid">
+                                                <div class="span6 control-group">
+                                                    <label class="control-label text-right" style="color:red;">Mobile (for notifications)</label>
+                                                    <div class="control-group">
+                                                        <input type="text" name="FatherMoblie" />
+                                                    </div>
+                                                </div>
+                                                <div class="  span6 control-group">
+                                                    <label class="control-label text-right" style="color:red;">Email (for notifications)</label>
+                                                    <div class="control-group">
+                                                        <input type="text" name="FatherEmail" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box box-blue">
+                                        <div class="box-title">
+                                            Personal Information (Parent 2)
+                                        </div>
+                                        <div class="box-content">
+                                            <div class="row-fluid">
+                                                <div class="span6 control-group">
+                                                    <label class="control-label text-right">Mother Name</label>
+                                                    <div class="control-group">
+                                                        <input type="text" name="MotherName" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span6 control-group">
+                                                    <label class="control-label text-right">Mobile</label>
+                                                    <div class="control-group">
+                                                        <input type="text" name="MotherMobile" />
+                                                    </div>
+                                                </div>
+                                                <div class="  span6 control-group">
+                                                    <label class="control-label text-right">Email</label>
+                                                    <div class="control-group">
+                                                        <input type="text" name="MotherEmail" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1203,14 +1331,15 @@
 
 
                         <div class="form-actions clearfix">
-                            <a href="javascript:;" class="btn button-previous">
-                                Back
-                            </a>
-                            <a href="javascript:;" class="btn btn-primary button-next">
-                                <center> Continue  </center>
-                            </a>
-                            <input type="submit" class="btn btn-success" value="Submit" />
-
+                            <div class="pull-right">
+                                <a href="javascript:;" id="back" class="btn button-previous">
+                                    Back
+                                </a>
+                                <a href="javascript:;" id="continue" class="btn btn-primary button-next">
+                                    <center> Continue  </center>
+                                </a>
+                                <input type="submit" id="submit" class="btn btn-success button-submit" value="Add Student" />
+                            </div>
                         </div>
 
                     </div>
